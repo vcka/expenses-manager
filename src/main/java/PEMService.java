@@ -7,57 +7,62 @@ class PEMService {
     private Repository repo = Repository.getRepository();
     private ReportService reportService = new ReportService();
 
-    Repository getRepo() {
-        return repo;
+    public PEMService() {
+        try {
+            repo.categoryLoad();
+            repo.expenseLoad();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("No data loaded.");
+        }
     }
 
     private Scanner in = new Scanner(System.in);
 
     void onCategorizedExpenseList() throws IOException, InterruptedException {
         MenuUtils.clearScreen();
-        MenuUtils.printMenuHeader("Categorized expenses");
+        MenuView.printMenuHeader("Categorized expenses");
         AtomicReference<Double> total = new AtomicReference<>(0.0D);
         reportService.calculateCategoriesTotal()
                 .forEach((k, v) -> {
                     total.updateAndGet(v1 -> v1 + v);
-                    MenuUtils.printMySubMenuContent(k + " - " + v);
+                    MenuView.printMySubMenuContent(k + " - " + v);
                 });
-        MenuUtils.printMenuFooter();
+        MenuView.printMenuFooter();
         System.out.println("Categories total: " + total);
     }
 
     void onYearlyExpenseList() throws IOException, InterruptedException {
         MenuUtils.clearScreen();
-        MenuUtils.printMenuHeader("Yearly expenses");
+        MenuView.printMenuHeader("Yearly expenses");
         AtomicReference<Double> total = new AtomicReference<>(0.0D);
         reportService.calculateYearlyTotal()
                 .forEach((k, v) -> {
                     total.updateAndGet(v1 -> v1 + v);
-                    MenuUtils.printMySubMenuContent(k + " - " + v);
+                    MenuView.printMySubMenuContent(k + " - " + v);
                 });
-        MenuUtils.printMenuFooter();
+        MenuView.printMenuFooter();
         System.out.println("Total expenses sum: " + total);
     }
 
     void onMonthlyExpenseList() throws IOException, InterruptedException {
         MenuUtils.clearScreen();
-        MenuUtils.printMenuHeader("Monthly expenses");
+        MenuView.printMenuHeader("Monthly expenses");
         reportService.calculateMonthlyTotal()
-                .forEach((k, v) -> MenuUtils.printMySubMenuContent(k + " - " + v));
-        MenuUtils.printMenuFooter();
+                .forEach((k, v) -> MenuView.printMySubMenuContent(k + " - " + v));
+        MenuView.printMenuFooter();
     }
 
     void onExpenseList() throws IOException, InterruptedException {
         MenuUtils.clearScreen();
-        MenuUtils.printMenuHeader("Expenses");
+        MenuView.printMenuHeader("Expenses");
         List<Expense> expenseList = repo.getExpenseList();
         for (int i = 0; i < expenseList.size(); i++) {
             Expense expense = expenseList.get(i);
             String catName = reportService.getCategoryNameByID(expense.getCategoryId());
             String dateString = DateUtil.dateToString(expense.getDate());
-            MenuUtils.printMySubMenuContent((i + 1) + ". " + catName + " - " + expense.getAmount() + ", " + expense.getDescription() + ", " + dateString);
+            MenuView.printMySubMenuContent((i + 1) + ". " + catName + " - " + expense.getAmount() + ", " + expense.getDescription() + ", " + dateString);
         }
-        MenuUtils.printMenuFooter();
+        MenuView.printMenuFooter();
     }
 
     void onCategoryDelete() throws IOException, InterruptedException {
@@ -139,13 +144,13 @@ class PEMService {
 
     void onCategoryList() throws IOException, InterruptedException {
         MenuUtils.clearScreen();
-        MenuUtils.printMenuHeader("Categories");
+        MenuView.printMenuHeader("Categories");
         List<Category> categoryList = repo.getCategoryList();
         for (int i = 0; i < categoryList.size(); i++) {
             Category c = categoryList.get(i);
-            MenuUtils.printMySubMenuContent((i + 1) + ". " + c.getName());
+            MenuView.printMySubMenuContent((i + 1) + ". " + c.getName());
         }
-        MenuUtils.printMenuFooter();
+        MenuView.printMenuFooter();
     }
 
     void onAddCategory() throws IOException, InterruptedException {
@@ -185,5 +190,14 @@ class PEMService {
             parseToDouble(in.nextLine());
         }
         return value;
+    }
+    void onExit() {
+        try {
+            repo.categorySave();
+            repo.expenseSave();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.exit(0);
     }
 }
