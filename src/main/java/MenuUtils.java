@@ -17,6 +17,7 @@ public class MenuUtils {
     static void clearScreen() throws IOException, InterruptedException {
         new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
     }
+
     static int checkInput(String input) throws IOException, InterruptedException {
         if (input.matches("\\d")) {
             choice = Integer.parseInt(input);

@@ -30,7 +30,7 @@ class MenuView {
         MenuUtils.checkInput(in.nextLine());
     }
 
-    void showMenu() throws IOException, InterruptedException {
+    void mainMenuLoop() throws IOException, InterruptedException {
         while (true) {
             printMenu();
             switch (MenuUtils.choice) {
@@ -56,7 +56,7 @@ class MenuView {
                     break;
                 case 5:
 //                    pemService.onMonthlyExpenseList();
-                    reportsMenu();
+                    reportsMenuLoop();
                     MenuUtils.pressAnyEnterToContinue();
                     MenuUtils.clearScreen();
                     break;
@@ -88,7 +88,7 @@ class MenuView {
         }
     }
 
-    private void reportsMenu() throws IOException, InterruptedException {
+    void reportsMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtils.clearScreen();
             MenuView.printMenuHeader(REPORTS_MENU);
