@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExpenseCategoryIRepository implements IRepository {
-    private List<Category> categoryList = new ArrayList<>();
+    private List<MoneyFlowCategory> moneyFlowCategoryList = new ArrayList<>();
     private static ExpenseCategoryIRepository expenseCategoryRepository;
 
     private ExpenseCategoryIRepository() {
@@ -17,23 +17,21 @@ public class ExpenseCategoryIRepository implements IRepository {
         return expenseCategoryRepository;
     }
 
-
-
     @Override
-    public List<Category> getList() {
-        return categoryList;
+    public List<MoneyFlowCategory> getList() {
+        return moneyFlowCategoryList;
     }
 
     @Override
     public void setList(List list) {
-        this.categoryList = list;
+        this.moneyFlowCategoryList = list;
     }
 
     @Override
     public void dataSave() throws IOException {
         FileOutputStream fos = new FileOutputStream("Categories.db");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(categoryList);
+        oos.writeObject(moneyFlowCategoryList);
         oos.close();
     }
 
@@ -41,7 +39,7 @@ public class ExpenseCategoryIRepository implements IRepository {
     public void dataLoad() throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream("Categories.db");
         ObjectInputStream ois = new ObjectInputStream(fis);
-        setList((List<Category>) ois.readObject());
+        setList((List<MoneyFlowCategory>) ois.readObject());
         ois.close();
     }
 }

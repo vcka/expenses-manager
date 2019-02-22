@@ -1,8 +1,6 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -32,7 +30,7 @@ class DateUtilTest {
 
     @Test
     void calculateMonthlyTotalTest(){
-        Category cat = new Category("TestCategory");
+        MoneyFlowCategory cat = new MoneyFlowCategory("TestCategory");
 //        Repository repo = Repository.getRepository();
 //        repo.getCategoryList().add(cat);
         assertEquals("TestCategory", cat.getName());

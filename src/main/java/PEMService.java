@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 class PEMService {
-    final ExpenseIRepository expenseRepository = ExpenseIRepository.getRepository();
-    final ExpenseCategoryIRepository expenseCategoryRepository = ExpenseCategoryIRepository.getRepository();
-    final IncomeIRepository incomeRepository = IncomeIRepository.getRepository();
-    final IncomeCategoryIRepository incomeCategoryRepository = IncomeCategoryIRepository.getRepository();
-    private ReportService reportService = new ReportService();
+    private final ExpenseIRepository expenseRepository = ExpenseIRepository.getRepository();
+    private final ExpenseCategoryIRepository expenseCategoryRepository = ExpenseCategoryIRepository.getRepository();
+    private final IncomeIRepository incomeRepository = IncomeIRepository.getRepository();
+    private final IncomeCategoryIRepository incomeCategoryRepository = IncomeCategoryIRepository.getRepository();
+    private final ReportService reportService = new ReportService();
 
     PEMService() {
         try {
@@ -92,7 +92,7 @@ class PEMService {
         int nr = checkInput(input);
         if (nr == 0) return;
         if (nr <= expenseCategoryRepository.getList().size()) {
-            System.out.println("Category " + expenseCategoryRepository.getList().get(nr - 1).getName() + " will be removed.");
+            System.out.println("MoneyFlowCategory " + expenseCategoryRepository.getList().get(nr - 1).getName() + " will be removed.");
             expenseRepository.getList().removeIf(
                     moneyFlow -> moneyFlow.getCategoryId()
                             .equals(expenseCategoryRepository.getList()
@@ -114,7 +114,7 @@ class PEMService {
         int nr = checkInput(input);
         if (nr == 0) return;
         if (nr <= incomeCategoryRepository.getList().size()) {
-            System.out.println("Category " + incomeCategoryRepository.getList().get(nr - 1).getName() + " will be removed.");
+            System.out.println("MoneyFlowCategory " + incomeCategoryRepository.getList().get(nr - 1).getName() + " will be removed.");
             incomeRepository.getList().removeIf(
                     income -> income.getCategoryId()
                             .equals(incomeCategoryRepository.getList()
@@ -173,8 +173,8 @@ class PEMService {
         int catChoice = checkInput(input);
         if (catChoice == 0) return;
         if (catChoice <= expenseCategoryRepository.getList().size()) {
-            Category selectedCategory = expenseCategoryRepository.getList().get(catChoice - 1);
-            System.out.println("You chose: " + selectedCategory.getName());
+            MoneyFlowCategory selectedMoneyFlowCategory = expenseCategoryRepository.getList().get(catChoice - 1);
+            System.out.println("You chose: " + selectedMoneyFlowCategory.getName());
             System.out.print("Please enter the amount: ");
             String amountInput = in.nextLine();
             double amount = parseToDouble(amountInput);
@@ -189,7 +189,7 @@ class PEMService {
             }
             while (date == null);
             MoneyFlow moneyFlow = new MoneyFlow();
-            moneyFlow.setCategoryId(selectedCategory.getCategoryId());
+            moneyFlow.setCategoryId(selectedMoneyFlowCategory.getCategoryId());
             moneyFlow.setAmount(amount);
             moneyFlow.setDescription(description);
             moneyFlow.setDate(date);
@@ -212,8 +212,8 @@ class PEMService {
         int catChoice = checkInput(input);
         if (catChoice == 0) return;
         if (catChoice <= incomeCategoryRepository.getList().size()) {
-            IncomeCategory selectedCategory = incomeCategoryRepository.getList().get(catChoice - 1);
-            System.out.println("You chose: " + selectedCategory.getName());
+            MoneyFlowCategory selectedMoneyFlowCategory = incomeCategoryRepository.getList().get(catChoice - 1);
+            System.out.println("You chose: " + selectedMoneyFlowCategory.getName());
             System.out.print("Please enter the amount: ");
             String amountInput = in.nextLine();
             double amount = parseToDouble(amountInput);
@@ -227,13 +227,13 @@ class PEMService {
                 date = DateUtil.stringToDate(in.nextLine());
             }
             while (date == null);
-            MoneyFlow income = new MoneyFlow();
-            income.setCategoryId(selectedCategory.getCategoryId());
-            income.setAmount(amount);
-            income.setDescription(description);
-            income.setDate(date);
+            MoneyFlow moneyFlow = new MoneyFlow();
+            moneyFlow.setCategoryId(selectedMoneyFlowCategory.getCategoryId());
+            moneyFlow.setAmount(amount);
+            moneyFlow.setDescription(description);
+            moneyFlow.setDate(date);
             //Store expense
-            incomeRepository.getList().add(income);
+            incomeRepository.getList().add(moneyFlow);
             System.out.println("Your income is added.");
         } else {
             System.out.println("No such category.");
@@ -246,9 +246,9 @@ class PEMService {
     void onCategoryList() throws IOException, InterruptedException {
         MenuUtils.clearScreen();
         MenuView.printMenuHeader("Categories");
-        List<Category> categoryList = expenseCategoryRepository.getList();
-        for (int i = 0; i < categoryList.size(); i++) {
-            Category c = categoryList.get(i);
+        List<MoneyFlowCategory> moneyFlowCategoryList = expenseCategoryRepository.getList();
+        for (int i = 0; i < moneyFlowCategoryList.size(); i++) {
+            MoneyFlowCategory c = moneyFlowCategoryList.get(i);
             MenuView.printMySubMenuContent((i + 1) + ". " + c.getName());
         }
         MenuView.printMenuFooter();
@@ -257,9 +257,9 @@ class PEMService {
     void onIncomeCategoryList() throws IOException, InterruptedException {
         MenuUtils.clearScreen();
         MenuView.printMenuHeader("Categories");
-        List<IncomeCategory> categoryList = incomeCategoryRepository.getList();
-        for (int i = 0; i < categoryList.size(); i++) {
-            IncomeCategory c = categoryList.get(i);
+        List<MoneyFlowCategory> moneyFlowCategoryList = incomeCategoryRepository.getList(); //2
+        for (int i = 0; i < moneyFlowCategoryList.size(); i++) {
+            MoneyFlowCategory c = moneyFlowCategoryList.get(i);
             MenuView.printMySubMenuContent((i + 1) + ". " + c.getName());
         }
         MenuView.printMenuFooter();
@@ -270,12 +270,10 @@ class PEMService {
         System.out.print("Please enter category name: ");
         String catName = in.nextLine();
         if (catName.equals("")) return;
-        boolean checkForExistingCategory = expenseCategoryRepository.getList().stream()
-                .anyMatch(category -> category.getName().equals(catName));
-        if (checkForExistingCategory) {
-            System.out.println("Category all ready exists.");
+        if (checkForExistingCategory(catName)) {
+            System.out.println("MoneyFlowCategory all ready exists.");
         } else {
-            Category cat = new Category(catName);
+            MoneyFlowCategory cat = new MoneyFlowCategory(catName);
             expenseCategoryRepository.getList().add(cat);
         }
     }
@@ -285,12 +283,10 @@ class PEMService {
         System.out.print("Please enter category name: ");
         String catName = in.nextLine();
         if (catName.equals("")) return;
-        boolean checkForExistingCategory = incomeCategoryRepository.getList().stream()
-                .anyMatch(category -> category.getName().equals(catName));
-        if (checkForExistingCategory) {
-            System.out.println("Category all ready exists.");
+        if (checkForExistingCategory(catName)) {
+            System.out.println("MoneyFlowCategory all ready exists.");
         } else {
-            IncomeCategory cat = new IncomeCategory(catName);
+            MoneyFlowCategory cat = new MoneyFlowCategory(catName); //1
             incomeCategoryRepository.getList().add(cat);
         }
     }
@@ -304,6 +300,11 @@ class PEMService {
             checkInput(in.nextLine());
         }
         return 0;
+    }
+
+    private boolean checkForExistingCategory(String catName){
+        return incomeCategoryRepository.getList().stream()
+                .anyMatch(moneyFlowCategory -> moneyFlowCategory.getName().equals(catName));
     }
 
     double parseToDouble(String input) {

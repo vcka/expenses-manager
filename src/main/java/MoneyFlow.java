@@ -1,7 +1,7 @@
 import java.io.Serializable;
 import java.util.Date;
 
-public class MoneyFlow<C,A,D,F> implements Serializable {
+class MoneyFlow<C,A,D,F> implements Serializable {
 
     private C categoryId;
     private A amount;
@@ -11,35 +11,35 @@ public class MoneyFlow<C,A,D,F> implements Serializable {
     MoneyFlow() {
     }
 
-    public C getCategoryId() {
+    C getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(C categoryId) {
+    void setCategoryId(C categoryId) {
         this.categoryId = categoryId;
     }
 
-    public A getAmount() {
+    A getAmount() {
         return amount;
     }
 
-    public void setAmount(A amount) {
+    void setAmount(A amount) {
         this.amount = amount;
     }
 
-    public D getDate() {
+    D getDate() {
         return date;
     }
 
-    public void setDate(D date) {
+    void setDate(D date) {
         this.date = date;
     }
 
-    public F getDescription() {
+    F getDescription() {
         return description;
     }
 
-    public void setDescription(F description) {
+    void setDescription(F description) {
         this.description = description;
     }
 }

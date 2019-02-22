@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IncomeIRepository implements IRepository {
-    private List<MoneyFlow> incomeList = new ArrayList<>();
+    private List<MoneyFlow> moneyFlowList = new ArrayList<>();
     private static IncomeIRepository incomeRepository;
 
     private IncomeIRepository() {
@@ -19,19 +19,19 @@ public class IncomeIRepository implements IRepository {
 
     @Override
     public List<MoneyFlow> getList() {
-        return this.incomeList;
+        return this.moneyFlowList;
     }
 
     @Override
     public void setList(List list) {
-        this.incomeList = list;
+        this.moneyFlowList = list;
     }
 
     @Override
     public void dataSave() throws IOException {
         FileOutputStream fos = new FileOutputStream("Income.db");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(incomeList);
+        oos.writeObject(moneyFlowList);
         oos.close();
     }
 
