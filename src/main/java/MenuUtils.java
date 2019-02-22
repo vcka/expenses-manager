@@ -30,7 +30,6 @@ public class MenuUtils {
             System.out.println("Wrong choice, try again.");
             pressAnyEnterToContinue();
             clearScreen();
-//            MenuView.printMenu();
             return choice;
         }
         return choice;

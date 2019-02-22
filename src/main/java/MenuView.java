@@ -4,40 +4,14 @@ import java.io.IOException;
 import java.util.Scanner;
 
 class MenuView {
-    private static final String MAIN_MENU = "Main menu";
-    private static final String INCOME_MENU = "Income menu";
-    private static final String EXPENSES_MENU = "Expenses menu";
-    private static final String REPORTS_MENU = "Reports menu";
-    private static final String EXIT = "Exit";
-
-    private static final String MONTHLY_EXPENSES = "Monthly expenses";
-    private static final String YEARLY_EXPENSES = "Yearly expenses";
-    private static final String CATEGORIZED_EXPENSES_LIST = "Categorized expenses list";
-
-    private static final String EXPENSES_SUB_MENU = "Expenses menu";
-    private static final String ADD_EXPENSE_CATEGORY = "Add expense category";
-    private static final String LIST_EXPENSES_CATEGORIES = "List expenses categories";
-    private static final String ADD_EXPENSE = "Add expense";
-    private static final String LIST_EXPENSES = "List expenses";
-    private static final String DELETE_EXPENSE_CATEGORY = "Delete expense category";
-    private static final String DELETE_EXPENSE = "Delete expense";
-
-    private static final String INCOME_SUB_MENU = "Income menu";
-    private static final String ADD_INCOME_CATEGORY = "Add income category";
-    private static final String LIST_INCOMES_CATEGORIES = "List incomes categories";
-    private static final String ADD_INCOME = "Add income";
-    private static final String LIST_INCOMES = "List incomes";
-    private static final String DELETE_INCOME_CATEGORY = "Delete income category";
-    private static final String DELETE_INCOME = "Delete income";
-
     private PEMService pemService = new PEMService();
     static Scanner in = new Scanner(System.in);
 
     private final static int frameWidth = 80;
 
     static void printMenu() throws IOException, InterruptedException {
-        printMenuHeader(MAIN_MENU);
-        printMyMainMenu(EXPENSES_MENU, INCOME_MENU, REPORTS_MENU, EXIT);
+        printMenuHeader(Consts.MAIN_MENU);
+        printMyMainMenu(Consts.EXPENSES_MENU, Consts.INCOME_MENU, Consts.REPORTS_MENU, Consts.EXIT);
         System.out.print("Enter your choice: ");
         MenuUtils.checkInput(in.nextLine());
     }
@@ -48,17 +22,14 @@ class MenuView {
             switch (MenuUtils.choice) {
                 case 1:
                     expenseMenuLoop();
-//                    MenuUtils.pressAnyEnterToContinue();
                     MenuUtils.clearScreen();
                     break;
                 case 2:
                     incomeMenuLoop();
-//                    MenuUtils.pressAnyEnterToContinue();
                     MenuUtils.clearScreen();
                     break;
                 case 3:
                     reportsMenuLoop();
-//                    MenuUtils.pressAnyEnterToContinue();
                     MenuUtils.clearScreen();
                     break;
                 case 4:
@@ -71,8 +42,8 @@ class MenuView {
     private void reportsMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtils.clearScreen();
-            MenuView.printMenuHeader(REPORTS_MENU);
-            printMyMainMenu(MONTHLY_EXPENSES, YEARLY_EXPENSES, CATEGORIZED_EXPENSES_LIST);
+            MenuView.printMenuHeader(Consts.REPORTS_MENU);
+            printMyMainMenu(Consts.MONTHLY_EXPENSES, Consts.YEARLY_EXPENSES, Consts.CATEGORIZED_EXPENSES_LIST);
             System.out.print("Enter your choice: ");
             MenuUtils.checkInput(in.nextLine());
             if (MenuUtils.choice == 0) break;
@@ -99,8 +70,8 @@ class MenuView {
     private void expenseMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtils.clearScreen();
-            MenuView.printMenuHeader(EXPENSES_SUB_MENU);
-            printMyMainMenu(ADD_EXPENSE_CATEGORY, LIST_EXPENSES_CATEGORIES, ADD_EXPENSE, LIST_EXPENSES, DELETE_EXPENSE_CATEGORY, DELETE_EXPENSE);
+            MenuView.printMenuHeader(Consts.EXPENSES_SUB_MENU);
+            printMyMainMenu(Consts.ADD_EXPENSE_CATEGORY, Consts.LIST_EXPENSES_CATEGORIES, Consts.ADD_EXPENSE, Consts.LIST_EXPENSES, Consts.DELETE_EXPENSE_CATEGORY, Consts.DELETE_EXPENSE);
             System.out.print("Enter your choice: ");
             MenuUtils.checkInput(in.nextLine());
             if (MenuUtils.choice == 0) break;
@@ -142,8 +113,8 @@ class MenuView {
     private void incomeMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtils.clearScreen();
-            MenuView.printMenuHeader(INCOME_SUB_MENU);
-            printMyMainMenu(ADD_INCOME_CATEGORY, LIST_INCOMES_CATEGORIES, ADD_INCOME, LIST_INCOMES, DELETE_INCOME_CATEGORY, DELETE_INCOME);
+            MenuView.printMenuHeader(Consts.INCOME_SUB_MENU);
+            printMyMainMenu(Consts.ADD_INCOME_CATEGORY, Consts.LIST_INCOMES_CATEGORIES, Consts.ADD_INCOME, Consts.LIST_INCOMES, Consts.DELETE_INCOME_CATEGORY, Consts.DELETE_INCOME);
             System.out.print("Enter your choice: ");
             MenuUtils.checkInput(in.nextLine());
             if (MenuUtils.choice == 0) break;
