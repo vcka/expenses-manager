@@ -3,12 +3,14 @@ import java.io.IOException;
 
 public class MenuUtils {
     static int choice;
+
     static void pressAnyEnterToContinue() {
         System.out.println("Press enter to continue...");
         MenuView.in.nextLine();
     }
+
     static void initConsole(String[] args) throws IOException {
-        if(args.length == 0) {
+        if (args.length == 0) {
             Process p = Runtime.getRuntime().exec("cmd.exe /c start java -jar " +
                     (new File(Application.class.getProtectionDomain().getCodeSource().getLocation().getPath())).getAbsolutePath() + " cmd");
         }
@@ -24,12 +26,12 @@ public class MenuUtils {
         } else if (input.matches("")) {
             clearScreen();
             choice = 0;
-//            MenuView.printMenu();
         } else {
             System.out.println("Wrong choice, try again.");
             pressAnyEnterToContinue();
             clearScreen();
-            MenuView.printMenu();
+//            MenuView.printMenu();
+            return choice;
         }
         return choice;
     }

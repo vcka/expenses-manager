@@ -48,17 +48,17 @@ class MenuView {
             switch (MenuUtils.choice) {
                 case 1:
                     expenseMenuLoop();
-                    MenuUtils.pressAnyEnterToContinue();
+//                    MenuUtils.pressAnyEnterToContinue();
                     MenuUtils.clearScreen();
                     break;
                 case 2:
                     incomeMenuLoop();
-                    MenuUtils.pressAnyEnterToContinue();
+//                    MenuUtils.pressAnyEnterToContinue();
                     MenuUtils.clearScreen();
                     break;
                 case 3:
                     reportsMenuLoop();
-                    MenuUtils.pressAnyEnterToContinue();
+//                    MenuUtils.pressAnyEnterToContinue();
                     MenuUtils.clearScreen();
                     break;
                 case 4:

@@ -60,7 +60,6 @@ class PEMService {
     void onExpenseList() throws IOException, InterruptedException {
         MenuUtils.clearScreen();
         MenuView.printMenuHeader("Expenses");
-        System.out.println();
         List<MoneyFlow> moneyFlowList = expenseRepository.getList();
         for (int i = 0; i < moneyFlowList.size(); i++) {
             MoneyFlow moneyFlow = moneyFlowList.get(i);
