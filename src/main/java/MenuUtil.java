@@ -1,7 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 
-public class MenuUtils {
+public class MenuUtil {
     static int choice;
 
     static void pressAnyEnterToContinue() {

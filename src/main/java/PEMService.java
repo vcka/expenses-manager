@@ -24,7 +24,7 @@ class PEMService {
     private Scanner in = new Scanner(System.in);
 
     void onCategorizedExpenseList() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
+        MenuUtil.clearScreen();
         MenuView.printMenuHeader("Categorized expenses");
         AtomicReference<Double> total = new AtomicReference<>(0.0D);
         reportService.calculateCategoriesTotal()
@@ -37,7 +37,7 @@ class PEMService {
     }
 
     void onYearlyExpenseList() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
+        MenuUtil.clearScreen();
         MenuView.printMenuHeader("Yearly expenses");
         AtomicReference<Double> total = new AtomicReference<>(0.0D);
         reportService.calculateYearlyTotal()
@@ -50,7 +50,7 @@ class PEMService {
     }
 
     void onMonthlyExpenseList() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
+        MenuUtil.clearScreen();
         MenuView.printMenuHeader("Monthly expenses");
         reportService.calculateMonthlyTotal()
                 .forEach((k, v) -> MenuView.printMySubMenuContent(k + " - " + v));
@@ -58,7 +58,7 @@ class PEMService {
     }
 
     void onExpenseList() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
+        MenuUtil.clearScreen();
         MenuView.printMenuHeader("Expenses");
         List<MoneyFlow> moneyFlowList = expenseRepository.getList();
         for (int i = 0; i < moneyFlowList.size(); i++) {
@@ -71,7 +71,7 @@ class PEMService {
     }
 
     void onIncomeList() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
+        MenuUtil.clearScreen();
         MenuView.printMenuHeader("Incomes");
         List<MoneyFlow> incomeList = incomeRepository.getList();
         for (int i = 0; i < incomeList.size(); i++) {
@@ -85,8 +85,8 @@ class PEMService {
 
     void onCategoryDelete() throws IOException, InterruptedException {
 
-        MenuUtils.clearScreen();
-        onCategoryList();
+        MenuUtil.clearScreen();
+        onExpenseCategoryList();
         System.out.print("Please enter the category to remove: ");
         String input = in.nextLine();
         int nr = checkInput(input);
@@ -100,14 +100,14 @@ class PEMService {
             expenseCategoryRepository.getList().remove(nr - 1);
         } else if (!expenseCategoryRepository.getList().isEmpty()) {
             System.out.println("No such category.");
-            MenuUtils.pressAnyEnterToContinue();
-            MenuUtils.clearScreen();
+            MenuUtil.pressAnyEnterToContinue();
+            MenuUtil.clearScreen();
             onCategoryDelete();
         }
     }
 
     void onIncomeCategoryDelete() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
+        MenuUtil.clearScreen();
         onIncomeCategoryList();
         System.out.print("Please enter the category to remove: ");
         String input = in.nextLine();
@@ -122,14 +122,14 @@ class PEMService {
             incomeCategoryRepository.getList().remove(nr - 1);
         } else if (!incomeCategoryRepository.getList().isEmpty()) {
             System.out.println("No such category.");
-            MenuUtils.pressAnyEnterToContinue();
-            MenuUtils.clearScreen();
+            MenuUtil.pressAnyEnterToContinue();
+            MenuUtil.clearScreen();
             onIncomeCategoryDelete();
         }
     }
 
     void onExpenseDelete() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
+        MenuUtil.clearScreen();
         onExpenseList();
         System.out.print("Please enter the expense to remove: ");
         String input = in.nextLine();
@@ -140,14 +140,14 @@ class PEMService {
             expenseRepository.getList().remove(nr - 1);
         } else {
             System.out.println("No such expense.");
-            MenuUtils.pressAnyEnterToContinue();
-            MenuUtils.clearScreen();
+            MenuUtil.pressAnyEnterToContinue();
+            MenuUtil.clearScreen();
             onExpenseDelete();
         }
     }
 
     void onIncomeDelete() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
+        MenuUtil.clearScreen();
         onIncomeList();
         System.out.print("Please enter the income to remove: ");
         String input = in.nextLine();
@@ -158,16 +158,16 @@ class PEMService {
             incomeRepository.getList().remove(nr - 1);
         } else {
             System.out.println("No such income.");
-            MenuUtils.pressAnyEnterToContinue();
-            MenuUtils.clearScreen();
+            MenuUtil.pressAnyEnterToContinue();
+            MenuUtil.clearScreen();
             onIncomeDelete();
         }
     }
 
 
     void onExpenseEntry() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
-        onCategoryList();
+        MenuUtil.clearScreen();
+        onExpenseCategoryList();
         System.out.print("Choose category number: ");
         String input = in.nextLine();
         int catChoice = checkInput(input);
@@ -195,17 +195,17 @@ class PEMService {
             moneyFlow.setDate(date);
             //Store moneyFlow
             expenseRepository.getList().add(moneyFlow);
-            System.out.println("Your moneyFlow is added.");
+            System.out.println("Your expense is added.");
         } else {
             System.out.println("No such category.");
-            MenuUtils.pressAnyEnterToContinue();
-            MenuUtils.clearScreen();
+            MenuUtil.pressAnyEnterToContinue();
+            MenuUtil.clearScreen();
             onExpenseEntry();
         }
     }
 
     void onIncomeEntry() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
+        MenuUtil.clearScreen();
         onIncomeCategoryList();
         System.out.print("Choose category number: ");
         String input = in.nextLine();
@@ -237,27 +237,24 @@ class PEMService {
             System.out.println("Your income is added.");
         } else {
             System.out.println("No such category.");
-            MenuUtils.pressAnyEnterToContinue();
-            MenuUtils.clearScreen();
+            MenuUtil.pressAnyEnterToContinue();
+            MenuUtil.clearScreen();
             onIncomeEntry();
         }
     }
 
-    void onCategoryList() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
-        MenuView.printMenuHeader("Categories");
-        List<MoneyFlowCategory> moneyFlowCategoryList = expenseCategoryRepository.getList();
-        for (int i = 0; i < moneyFlowCategoryList.size(); i++) {
-            MoneyFlowCategory c = moneyFlowCategoryList.get(i);
-            MenuView.printMySubMenuContent((i + 1) + ". " + c.getName());
-        }
-        MenuView.printMenuFooter();
+    void onExpenseCategoryList() throws IOException, InterruptedException {
+        onCategoryList(expenseCategoryRepository);
     }
 
     void onIncomeCategoryList() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
+       onCategoryList(incomeCategoryRepository);
+    }
+
+    void onCategoryList(IRepository repository) throws IOException, InterruptedException {
+        MenuUtil.clearScreen();
         MenuView.printMenuHeader("Categories");
-        List<MoneyFlowCategory> moneyFlowCategoryList = incomeCategoryRepository.getList(); //2
+        List<MoneyFlowCategory> moneyFlowCategoryList = repository.getList();
         for (int i = 0; i < moneyFlowCategoryList.size(); i++) {
             MoneyFlowCategory c = moneyFlowCategoryList.get(i);
             MenuView.printMySubMenuContent((i + 1) + ". " + c.getName());
@@ -265,8 +262,8 @@ class PEMService {
         MenuView.printMenuFooter();
     }
 
-    void onAddCategory() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
+    void onAddExpenseCategory() throws IOException, InterruptedException {
+        MenuUtil.clearScreen();
         System.out.print("Please enter category name: ");
         String catName = in.nextLine();
         if (catName.equals("")) return;
@@ -279,7 +276,20 @@ class PEMService {
     }
 
     void onAddIncomeCategory() throws IOException, InterruptedException {
-        MenuUtils.clearScreen();
+        MenuUtil.clearScreen();
+        System.out.print("Please enter category name: ");
+        String catName = in.nextLine();
+        if (catName.equals("")) return;
+        if (checkForExistingCategory(catName)) {
+            System.out.println("MoneyFlowCategory all ready exists.");
+        } else {
+            MoneyFlowCategory cat = new MoneyFlowCategory(catName); //1
+            incomeCategoryRepository.getList().add(cat);
+        }
+    }
+//IMPLEMENT!!!!!!!!!
+    void onAddCategory(/*IRepository repository*/) throws IOException, InterruptedException {
+        MenuUtil.clearScreen();
         System.out.print("Please enter category name: ");
         String catName = in.nextLine();
         if (catName.equals("")) return;

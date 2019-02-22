@@ -13,24 +13,25 @@ class MenuView {
         printMenuHeader(Consts.MAIN_MENU);
         printMyMainMenu(Consts.EXPENSES_MENU, Consts.INCOME_MENU, Consts.REPORTS_MENU, Consts.EXIT);
         System.out.print("Enter your choice: ");
-        MenuUtils.checkInput(in.nextLine());
+        MenuUtil.checkInput(in.nextLine());
     }
 
     void mainMenuLoop() throws IOException, InterruptedException {
         while (true) {
+            MenuUtil.clearScreen();
             printMenu();
-            switch (MenuUtils.choice) {
+            switch (MenuUtil.choice) {
                 case 1:
                     expenseMenuLoop();
-                    MenuUtils.clearScreen();
+                    MenuUtil.clearScreen();
                     break;
                 case 2:
                     incomeMenuLoop();
-                    MenuUtils.clearScreen();
+                    MenuUtil.clearScreen();
                     break;
                 case 3:
                     reportsMenuLoop();
-                    MenuUtils.clearScreen();
+                    MenuUtil.clearScreen();
                     break;
                 case 4:
                     pemService.onExit();
@@ -41,27 +42,27 @@ class MenuView {
 
     private void reportsMenuLoop() throws IOException, InterruptedException {
         while (true) {
-            MenuUtils.clearScreen();
+            MenuUtil.clearScreen();
             MenuView.printMenuHeader(Consts.REPORTS_MENU);
             printMyMainMenu(Consts.MONTHLY_EXPENSES, Consts.YEARLY_EXPENSES, Consts.CATEGORIZED_EXPENSES_LIST);
             System.out.print("Enter your choice: ");
-            MenuUtils.checkInput(in.nextLine());
-            if (MenuUtils.choice == 0) break;
-            switch (MenuUtils.choice) {
+            MenuUtil.checkInput(in.nextLine());
+            if (MenuUtil.choice == 0) break;
+            switch (MenuUtil.choice) {
                 case 1:
                     pemService.onMonthlyExpenseList();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
                 case 2:
                     pemService.onYearlyExpenseList();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
                 case 3:
                     pemService.onCategorizedExpenseList();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
             }
         }
@@ -69,42 +70,42 @@ class MenuView {
 
     private void expenseMenuLoop() throws IOException, InterruptedException {
         while (true) {
-            MenuUtils.clearScreen();
+            MenuUtil.clearScreen();
             MenuView.printMenuHeader(Consts.EXPENSES_SUB_MENU);
             printMyMainMenu(Consts.ADD_EXPENSE_CATEGORY, Consts.LIST_EXPENSES_CATEGORIES, Consts.ADD_EXPENSE, Consts.LIST_EXPENSES, Consts.DELETE_EXPENSE_CATEGORY, Consts.DELETE_EXPENSE);
             System.out.print("Enter your choice: ");
-            MenuUtils.checkInput(in.nextLine());
-            if (MenuUtils.choice == 0) break;
-            switch (MenuUtils.choice) {
+            MenuUtil.checkInput(in.nextLine());
+            if (MenuUtil.choice == 0) break;
+            switch (MenuUtil.choice) {
                 case 1:
                     pemService.onAddCategory();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
                 case 2:
-                    pemService.onCategoryList();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    pemService.onExpenseCategoryList();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
                 case 3:
                     pemService.onExpenseEntry();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
                 case 4:
                     pemService.onExpenseList();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
                 case 5:
                     pemService.onCategoryDelete();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
                 case 6:
                     pemService.onExpenseDelete();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
             }
         }
@@ -112,42 +113,42 @@ class MenuView {
 
     private void incomeMenuLoop() throws IOException, InterruptedException {
         while (true) {
-            MenuUtils.clearScreen();
+            MenuUtil.clearScreen();
             MenuView.printMenuHeader(Consts.INCOME_SUB_MENU);
             printMyMainMenu(Consts.ADD_INCOME_CATEGORY, Consts.LIST_INCOMES_CATEGORIES, Consts.ADD_INCOME, Consts.LIST_INCOMES, Consts.DELETE_INCOME_CATEGORY, Consts.DELETE_INCOME);
             System.out.print("Enter your choice: ");
-            MenuUtils.checkInput(in.nextLine());
-            if (MenuUtils.choice == 0) break;
-            switch (MenuUtils.choice) {
+            MenuUtil.checkInput(in.nextLine());
+            if (MenuUtil.choice == 0) break;
+            switch (MenuUtil.choice) {
                 case 1:
                     pemService.onAddIncomeCategory();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
                 case 2:
                     pemService.onIncomeCategoryList();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
                 case 3:
                     pemService.onIncomeEntry();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
                 case 4:
                     pemService.onIncomeList();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
                 case 5:
                     pemService.onIncomeCategoryDelete();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
                 case 6:
                     pemService.onIncomeDelete();
-                    MenuUtils.pressAnyEnterToContinue();
-                    MenuUtils.clearScreen();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
                     break;
             }
         }

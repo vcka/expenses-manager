@@ -4,10 +4,10 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 class ReportService {
-    final ExpenseIRepository expenseRepository = ExpenseIRepository.getRepository();
-    final ExpenseCategoryIRepository expenseCategoryRepository = ExpenseCategoryIRepository.getRepository();
-    final IncomeIRepository incomeRepository = IncomeIRepository.getRepository();
-    final IncomeCategoryIRepository incomeCategoryRepository = IncomeCategoryIRepository.getRepository();
+    private final ExpenseIRepository expenseRepository = ExpenseIRepository.getRepository();
+    private final ExpenseCategoryIRepository expenseCategoryRepository = ExpenseCategoryIRepository.getRepository();
+    private final IncomeIRepository incomeRepository = IncomeIRepository.getRepository();
+    private final IncomeCategoryIRepository incomeCategoryRepository = IncomeCategoryIRepository.getRepository();
 
     Map<String, Double> calculateMonthlyTotal() {
         Map<String, Double> map = expenseRepository.getList().stream()
