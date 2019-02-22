@@ -2,27 +2,29 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IncomeRepository implements RepositoryService {
-    private static List<Income> incomeList = new ArrayList<>();
-    private static IncomeRepository incomeRepository;
+public class IncomeIRepository implements IRepository {
+    private List<MoneyFlow> incomeList = new ArrayList<>();
+    private static IncomeIRepository incomeRepository;
 
-    private IncomeRepository() {
+    private IncomeIRepository() {
     }
 
-    static IncomeRepository getIncomeRepository() {
+    static IncomeIRepository getRepository() {
         if (incomeRepository == null) {
-            incomeRepository = new IncomeRepository() {
+            incomeRepository = new IncomeIRepository() {
             };
         }
         return incomeRepository;
     }
 
-    List<Income> getIncomeList() {
-        return incomeList;
+    @Override
+    public List<MoneyFlow> getList() {
+        return this.incomeList;
     }
 
-    private void setIncomeList(List<Income> incomeList) {
-        IncomeRepository.incomeList = incomeList;
+    @Override
+    public void setList(List list) {
+        this.incomeList = list;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class IncomeRepository implements RepositoryService {
     public void dataLoad() throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream("Income.db");
         ObjectInputStream ois = new ObjectInputStream(fis);
-        setIncomeList((List<Income>) ois.readObject());
+        setList((List<MoneyFlow>) ois.readObject());
         ois.close();
     }
 }

@@ -2,27 +2,29 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IncomeCategoryRepository implements RepositoryService {
-    private static List<IncomeCategory> incomeCategoryList = new ArrayList<>();
-    private static IncomeCategoryRepository incomeCategoryRepository;
+public class IncomeCategoryIRepository implements IRepository {
+    private List<IncomeCategory> incomeCategoryList = new ArrayList<>();
+    private static IncomeCategoryIRepository incomeCategoryRepository;
 
-    private IncomeCategoryRepository() {
+    private IncomeCategoryIRepository() {
     }
 
-    static IncomeCategoryRepository getIncomeCategoryRepository() {
+    static IncomeCategoryIRepository getRepository() {
         if (incomeCategoryRepository == null) {
-            incomeCategoryRepository = new IncomeCategoryRepository() {
+            incomeCategoryRepository = new IncomeCategoryIRepository() {
             };
         }
         return incomeCategoryRepository;
     }
 
-    List<IncomeCategory> getIncomeCategoryList() {
-        return incomeCategoryList;
+    @Override
+    public List<IncomeCategory> getList() {
+        return this.incomeCategoryList;
     }
 
-    private void setIncomeCategoryList(List<IncomeCategory> incomeCategoryList) {
-        IncomeCategoryRepository.incomeCategoryList = incomeCategoryList;
+    @Override
+    public void setList(List list) {
+        this.incomeCategoryList = list;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class IncomeCategoryRepository implements RepositoryService {
     public void dataLoad() throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream("Income-Categories.db");
         ObjectInputStream ois = new ObjectInputStream(fis);
-        setIncomeCategoryList((List<IncomeCategory>) ois.readObject());
+        setList((List<IncomeCategory>) ois.readObject());
         ois.close();
     }
 }

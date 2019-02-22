@@ -4,31 +4,31 @@ import java.io.IOException;
 import java.util.Scanner;
 
 class MenuView {
-    public static final String MAIN_MENU = "Main menu";
-    public static final String EXPENSES_MENU = "Expenses menu";
-    public static final String INCOME_MENU = "Income menu";
-    public static final String REPORTS_MENU = "Reports menu";
-    public static final String EXIT = "Exit";
+    private static final String MAIN_MENU = "Main menu";
+    private static final String INCOME_MENU = "Income menu";
+    private static final String EXPENSES_MENU = "Expenses menu";
+    private static final String REPORTS_MENU = "Reports menu";
+    private static final String EXIT = "Exit";
 
-    public static final String MONTHLY_EXPENSES = "Monthly expenses";
-    public static final String YEARLY_EXPENSES = "Yearly expenses";
-    public static final String CATEGORIZED_EXPENSES_LIST = "Categorized expenses list";
+    private static final String MONTHLY_EXPENSES = "Monthly expenses";
+    private static final String YEARLY_EXPENSES = "Yearly expenses";
+    private static final String CATEGORIZED_EXPENSES_LIST = "Categorized expenses list";
 
-    public static final String EXPENSES_SUB_MENU = "Expenses menu";
-    public static final String ADD_EXPENSE_CATEGORY = "Add expense category";
-    public static final String LIST_EXPENSES_CATEGORIES = "List expenses categories";
-    public static final String ADD_EXPENSE = "Add expense";
-    public static final String LIST_EXPENSES = "List expenses";
-    public static final String DELETE_EXPENSE_CATEGORY = "Delete expense category";
-    public static final String DELETE_EXPENSE = "Delete expense";
+    private static final String EXPENSES_SUB_MENU = "Expenses menu";
+    private static final String ADD_EXPENSE_CATEGORY = "Add expense category";
+    private static final String LIST_EXPENSES_CATEGORIES = "List expenses categories";
+    private static final String ADD_EXPENSE = "Add expense";
+    private static final String LIST_EXPENSES = "List expenses";
+    private static final String DELETE_EXPENSE_CATEGORY = "Delete expense category";
+    private static final String DELETE_EXPENSE = "Delete expense";
 
-    public static final String INCOME_SUB_MENU = "Income menu";
-    public static final String ADD_INCOME_CATEGORY = "Add income category";
-    public static final String LIST_INCOMES_CATEGORIES = "List incomes categories";
-    public static final String ADD_INCOME = "Add income";
-    public static final String LIST_INCOMES = "List incomes";
-    public static final String DELETE_INCOME_CATEGORY = "Delete income category";
-    public static final String DELETE_INCOME = "Delete income";
+    private static final String INCOME_SUB_MENU = "Income menu";
+    private static final String ADD_INCOME_CATEGORY = "Add income category";
+    private static final String LIST_INCOMES_CATEGORIES = "List incomes categories";
+    private static final String ADD_INCOME = "Add income";
+    private static final String LIST_INCOMES = "List incomes";
+    private static final String DELETE_INCOME_CATEGORY = "Delete income category";
+    private static final String DELETE_INCOME = "Delete income";
 
     private PEMService pemService = new PEMService();
     static Scanner in = new Scanner(System.in);
@@ -68,7 +68,7 @@ class MenuView {
         }
     }
 
-    void reportsMenuLoop() throws IOException, InterruptedException {
+    private void reportsMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtils.clearScreen();
             MenuView.printMenuHeader(REPORTS_MENU);
@@ -96,7 +96,7 @@ class MenuView {
         }
     }
 
-    void expenseMenuLoop() throws IOException, InterruptedException {
+    private void expenseMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtils.clearScreen();
             MenuView.printMenuHeader(EXPENSES_SUB_MENU);
@@ -139,7 +139,7 @@ class MenuView {
         }
     }
 
-    void incomeMenuLoop() throws IOException, InterruptedException {
+    private void incomeMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtils.clearScreen();
             MenuView.printMenuHeader(INCOME_SUB_MENU);

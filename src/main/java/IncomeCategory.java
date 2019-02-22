@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 public class IncomeCategory implements Serializable {
-    private Long incomeCategoryId = System.currentTimeMillis();
+    private Long categoryId = System.currentTimeMillis();
     private String name;
 
     IncomeCategory(String name) {
@@ -9,8 +9,8 @@ public class IncomeCategory implements Serializable {
         System.out.println("Category created.");
     }
 
-    Long getIncomeCategoryId() {
-        return incomeCategoryId;
+    Long getCategoryId() {
+        return categoryId;
     }
 
     String getName() {

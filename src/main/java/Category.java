@@ -1,10 +1,10 @@
 import java.io.Serializable;
 
-class Category implements Serializable {
+class Category<N> implements Serializable {
     private Long categoryId = System.currentTimeMillis();
-    private String name;
+    private N name;
 
-    Category(String name) {
+    Category(N name) {
         this.name = name;
         System.out.println("Category created.");
     }
@@ -13,7 +13,7 @@ class Category implements Serializable {
         return categoryId;
     }
 
-    String getName() {
+    N getName() {
         return name;
     }
 }

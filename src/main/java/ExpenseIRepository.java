@@ -2,34 +2,36 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpenseRepository implements RepositoryService {
-    private static List<Expense> expenseList = new ArrayList<>();
-    private static ExpenseRepository expenseRepository;
+public class ExpenseIRepository implements IRepository {
+    private List<MoneyFlow> moneyFlowList = new ArrayList<>();
+    private static ExpenseIRepository expenseRepository;
 
-    private ExpenseRepository() {
+    private ExpenseIRepository() {
     }
 
-    static ExpenseRepository getExpenseRepository() {
+    static ExpenseIRepository getRepository() {
         if (expenseRepository == null) {
-            expenseRepository = new ExpenseRepository() {
+            expenseRepository = new ExpenseIRepository() {
             };
         }
         return expenseRepository;
     }
 
-    List<Expense> getExpenseList() {
-        return expenseList;
+    @Override
+    public List<MoneyFlow> getList() {
+        return this.moneyFlowList;
     }
 
-    private void setExpenseList(List<Expense> expenseList) {
-        ExpenseRepository.expenseList = expenseList;
+    @Override
+    public void setList(List list) {
+        this.moneyFlowList = list;
     }
 
     @Override
     public void dataSave() throws IOException {
         FileOutputStream fos = new FileOutputStream("Expenses.db");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(expenseList);
+        oos.writeObject(moneyFlowList);
         oos.close();
     }
 
@@ -37,7 +39,7 @@ public class ExpenseRepository implements RepositoryService {
     public void dataLoad() throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream("Expenses.db");
         ObjectInputStream ois = new ObjectInputStream(fis);
-        setExpenseList((List<Expense>) ois.readObject());
+        setList((List<MoneyFlow>) ois.readObject());
         ois.close();
     }
 }

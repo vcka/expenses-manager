@@ -23,7 +23,7 @@ public class MenuUtils {
             choice = Integer.parseInt(input);
         } else if (input.matches("")) {
             clearScreen();
-            choice =  0;
+            choice = 0;
 //            MenuView.printMenu();
         } else {
             System.out.println("Wrong choice, try again.");

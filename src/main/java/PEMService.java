@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 class PEMService {
-    private ExpenseRepository expenseRepository = ExpenseRepository.getExpenseRepository();
-    private ExpenseCategoryRepository expenseCategoryRepository = ExpenseCategoryRepository.getExpenseCategoryRepository();
-    private IncomeRepository incomeRepository = IncomeRepository.getIncomeRepository();
-    private IncomeCategoryRepository incomeCategoryRepository = IncomeCategoryRepository.getIncomeCategoryRepository();
+    final ExpenseIRepository expenseRepository = ExpenseIRepository.getRepository();
+    final ExpenseCategoryIRepository expenseCategoryRepository = ExpenseCategoryIRepository.getRepository();
+    final IncomeIRepository incomeRepository = IncomeIRepository.getRepository();
+    final IncomeCategoryIRepository incomeCategoryRepository = IncomeCategoryIRepository.getRepository();
     private ReportService reportService = new ReportService();
 
-    public PEMService() {
+    PEMService() {
         try {
             expenseCategoryRepository.dataLoad();
             expenseRepository.dataLoad();
@@ -60,12 +60,13 @@ class PEMService {
     void onExpenseList() throws IOException, InterruptedException {
         MenuUtils.clearScreen();
         MenuView.printMenuHeader("Expenses");
-        List<Expense> expenseList = expenseRepository.getExpenseList();
-        for (int i = 0; i < expenseList.size(); i++) {
-            Expense expense = expenseList.get(i);
-            String catName = reportService.getCategoryNameByID(expense.getCategoryId());
-            String dateString = DateUtil.dateToString(expense.getDate());
-            MenuView.printMySubMenuContent((i + 1) + ". " + catName + " - " + expense.getAmount() + ", " + expense.getDescription() + ", " + dateString);
+        System.out.println();
+        List<MoneyFlow> moneyFlowList = expenseRepository.getList();
+        for (int i = 0; i < moneyFlowList.size(); i++) {
+            MoneyFlow moneyFlow = moneyFlowList.get(i);
+            String catName = reportService.getCategoryNameByID((Long) moneyFlow.getCategoryId());
+            String dateString = DateUtil.dateToString((Date) moneyFlow.getDate());
+            MenuView.printMySubMenuContent((i + 1) + ". " + catName + " - " + moneyFlow.getAmount() + ", " + moneyFlow.getDescription() + ", " + dateString);
         }
         MenuView.printMenuFooter();
     }
@@ -73,31 +74,32 @@ class PEMService {
     void onIncomeList() throws IOException, InterruptedException {
         MenuUtils.clearScreen();
         MenuView.printMenuHeader("Incomes");
-        List<Income> incomeList = incomeRepository.getIncomeList();
+        List<MoneyFlow> incomeList = incomeRepository.getList();
         for (int i = 0; i < incomeList.size(); i++) {
-            Income income = incomeList.get(i);
-            String catName = reportService.getIncomeCategoryNameByID(income.getCategoryId());
-            String dateString = DateUtil.dateToString(income.getDate());
+            MoneyFlow income = incomeList.get(i);
+            String catName = reportService.getIncomeCategoryNameByID((Long) income.getCategoryId());
+            String dateString = DateUtil.dateToString((Date) income.getDate());
             MenuView.printMySubMenuContent((i + 1) + ". " + catName + " - " + income.getAmount() + ", " + income.getDescription() + ", " + dateString);
         }
         MenuView.printMenuFooter();
     }
 
     void onCategoryDelete() throws IOException, InterruptedException {
+
         MenuUtils.clearScreen();
         onCategoryList();
         System.out.print("Please enter the category to remove: ");
         String input = in.nextLine();
         int nr = checkInput(input);
         if (nr == 0) return;
-        if (nr <= expenseCategoryRepository.getCategoryList().size()) {
-            System.out.println("Category " + expenseCategoryRepository.getCategoryList().get(nr - 1).getName() + " will be removed.");
-            expenseRepository.getExpenseList().removeIf(
-                    expense -> expense.getCategoryId()
-                            .equals(expenseCategoryRepository.getCategoryList()
+        if (nr <= expenseCategoryRepository.getList().size()) {
+            System.out.println("Category " + expenseCategoryRepository.getList().get(nr - 1).getName() + " will be removed.");
+            expenseRepository.getList().removeIf(
+                    moneyFlow -> moneyFlow.getCategoryId()
+                            .equals(expenseCategoryRepository.getList()
                                     .get(nr - 1).getCategoryId()));
-            expenseCategoryRepository.getCategoryList().remove(nr - 1);
-        } else if (!expenseCategoryRepository.getCategoryList().isEmpty()) {
+            expenseCategoryRepository.getList().remove(nr - 1);
+        } else if (!expenseCategoryRepository.getList().isEmpty()) {
             System.out.println("No such category.");
             MenuUtils.pressAnyEnterToContinue();
             MenuUtils.clearScreen();
@@ -112,14 +114,14 @@ class PEMService {
         String input = in.nextLine();
         int nr = checkInput(input);
         if (nr == 0) return;
-        if (nr <= incomeCategoryRepository.getIncomeCategoryList().size()) {
-            System.out.println("Category " + incomeCategoryRepository.getIncomeCategoryList().get(nr - 1).getName() + " will be removed.");
-            incomeRepository.getIncomeList().removeIf(
+        if (nr <= incomeCategoryRepository.getList().size()) {
+            System.out.println("Category " + incomeCategoryRepository.getList().get(nr - 1).getName() + " will be removed.");
+            incomeRepository.getList().removeIf(
                     income -> income.getCategoryId()
-                            .equals(incomeCategoryRepository.getIncomeCategoryList()
-                                    .get(nr - 1).getIncomeCategoryId()));
-            incomeCategoryRepository.getIncomeCategoryList().remove(nr - 1);
-        } else if (!incomeCategoryRepository.getIncomeCategoryList().isEmpty()) {
+                            .equals(incomeCategoryRepository.getList()
+                                    .get(nr - 1).getCategoryId()));
+            incomeCategoryRepository.getList().remove(nr - 1);
+        } else if (!incomeCategoryRepository.getList().isEmpty()) {
             System.out.println("No such category.");
             MenuUtils.pressAnyEnterToContinue();
             MenuUtils.clearScreen();
@@ -134,9 +136,9 @@ class PEMService {
         String input = in.nextLine();
         int nr = checkInput(input);
         if (nr == 0) return;
-        if (nr <= expenseRepository.getExpenseList().size()) {
-            System.out.println("Expense " + expenseRepository.getExpenseList().get(nr - 1).getDescription() + " will be removed.");
-            expenseRepository.getExpenseList().remove(nr - 1);
+        if (nr <= expenseRepository.getList().size()) {
+            System.out.println("MoneyFlow " + expenseRepository.getList().get(nr - 1) + " will be removed.");
+            expenseRepository.getList().remove(nr - 1);
         } else {
             System.out.println("No such expense.");
             MenuUtils.pressAnyEnterToContinue();
@@ -152,9 +154,9 @@ class PEMService {
         String input = in.nextLine();
         int nr = checkInput(input);
         if (nr == 0) return;
-        if (nr <= incomeRepository.getIncomeList().size()) {
-            System.out.println("Income " + incomeRepository.getIncomeList().get(nr - 1).getDescription() + " will be removed.");
-            incomeRepository.getIncomeList().remove(nr - 1);
+        if (nr <= incomeRepository.getList().size()) {
+            System.out.println("Income " + incomeRepository.getList().get(nr - 1).getDescription() + " will be removed.");
+            incomeRepository.getList().remove(nr - 1);
         } else {
             System.out.println("No such income.");
             MenuUtils.pressAnyEnterToContinue();
@@ -171,8 +173,8 @@ class PEMService {
         String input = in.nextLine();
         int catChoice = checkInput(input);
         if (catChoice == 0) return;
-        if (catChoice <= expenseCategoryRepository.getCategoryList().size()) {
-            Category selectedCategory = expenseCategoryRepository.getCategoryList().get(catChoice - 1);
+        if (catChoice <= expenseCategoryRepository.getList().size()) {
+            Category selectedCategory = expenseCategoryRepository.getList().get(catChoice - 1);
             System.out.println("You chose: " + selectedCategory.getName());
             System.out.print("Please enter the amount: ");
             String amountInput = in.nextLine();
@@ -187,14 +189,14 @@ class PEMService {
                 date = DateUtil.stringToDate(in.nextLine());
             }
             while (date == null);
-            Expense expense = new Expense();
-            expense.setCategoryId(selectedCategory.getCategoryId());
-            expense.setAmount(amount);
-            expense.setDescription(description);
-            expense.setDate(date);
-            //Store expense
-            expenseRepository.getExpenseList().add(expense);
-            System.out.println("Your expense is added.");
+            MoneyFlow moneyFlow = new MoneyFlow();
+            moneyFlow.setCategoryId(selectedCategory.getCategoryId());
+            moneyFlow.setAmount(amount);
+            moneyFlow.setDescription(description);
+            moneyFlow.setDate(date);
+            //Store moneyFlow
+            expenseRepository.getList().add(moneyFlow);
+            System.out.println("Your moneyFlow is added.");
         } else {
             System.out.println("No such category.");
             MenuUtils.pressAnyEnterToContinue();
@@ -210,8 +212,8 @@ class PEMService {
         String input = in.nextLine();
         int catChoice = checkInput(input);
         if (catChoice == 0) return;
-        if (catChoice <= incomeCategoryRepository.getIncomeCategoryList().size()) {
-            IncomeCategory selectedCategory = incomeCategoryRepository.getIncomeCategoryList().get(catChoice - 1);
+        if (catChoice <= incomeCategoryRepository.getList().size()) {
+            IncomeCategory selectedCategory = incomeCategoryRepository.getList().get(catChoice - 1);
             System.out.println("You chose: " + selectedCategory.getName());
             System.out.print("Please enter the amount: ");
             String amountInput = in.nextLine();
@@ -226,13 +228,13 @@ class PEMService {
                 date = DateUtil.stringToDate(in.nextLine());
             }
             while (date == null);
-            Income income = new Income();
-            income.setCategoryId(selectedCategory.getIncomeCategoryId());
+            MoneyFlow income = new MoneyFlow();
+            income.setCategoryId(selectedCategory.getCategoryId());
             income.setAmount(amount);
             income.setDescription(description);
             income.setDate(date);
             //Store expense
-            incomeRepository.getIncomeList().add(income);
+            incomeRepository.getList().add(income);
             System.out.println("Your income is added.");
         } else {
             System.out.println("No such category.");
@@ -245,7 +247,7 @@ class PEMService {
     void onCategoryList() throws IOException, InterruptedException {
         MenuUtils.clearScreen();
         MenuView.printMenuHeader("Categories");
-        List<Category> categoryList = expenseCategoryRepository.getCategoryList();
+        List<Category> categoryList = expenseCategoryRepository.getList();
         for (int i = 0; i < categoryList.size(); i++) {
             Category c = categoryList.get(i);
             MenuView.printMySubMenuContent((i + 1) + ". " + c.getName());
@@ -256,7 +258,7 @@ class PEMService {
     void onIncomeCategoryList() throws IOException, InterruptedException {
         MenuUtils.clearScreen();
         MenuView.printMenuHeader("Categories");
-        List<IncomeCategory> categoryList = incomeCategoryRepository.getIncomeCategoryList();
+        List<IncomeCategory> categoryList = incomeCategoryRepository.getList();
         for (int i = 0; i < categoryList.size(); i++) {
             IncomeCategory c = categoryList.get(i);
             MenuView.printMySubMenuContent((i + 1) + ". " + c.getName());
@@ -269,13 +271,13 @@ class PEMService {
         System.out.print("Please enter category name: ");
         String catName = in.nextLine();
         if (catName.equals("")) return;
-        boolean checkForExistingCategory = expenseCategoryRepository.getCategoryList().stream()
+        boolean checkForExistingCategory = expenseCategoryRepository.getList().stream()
                 .anyMatch(category -> category.getName().equals(catName));
         if (checkForExistingCategory) {
             System.out.println("Category all ready exists.");
         } else {
             Category cat = new Category(catName);
-            expenseCategoryRepository.getCategoryList().add(cat);
+            expenseCategoryRepository.getList().add(cat);
         }
     }
 
@@ -284,13 +286,13 @@ class PEMService {
         System.out.print("Please enter category name: ");
         String catName = in.nextLine();
         if (catName.equals("")) return;
-        boolean checkForExistingCategory = incomeCategoryRepository.getIncomeCategoryList().stream()
+        boolean checkForExistingCategory = incomeCategoryRepository.getList().stream()
                 .anyMatch(category -> category.getName().equals(catName));
         if (checkForExistingCategory) {
             System.out.println("Category all ready exists.");
         } else {
             IncomeCategory cat = new IncomeCategory(catName);
-            incomeCategoryRepository.getIncomeCategoryList().add(cat);
+            incomeCategoryRepository.getList().add(cat);
         }
     }
 
