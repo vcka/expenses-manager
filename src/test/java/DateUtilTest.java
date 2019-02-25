@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 
 class DateUtilTest {
     SimpleDateFormat df = new SimpleDateFormat("yyyy MM dd");
-    PEMService pemService = new PEMService();
+    PEMServiceHelper pemService = new PEMServiceHelper();
 
     @Test
     void dateToStringTest() throws ParseException {

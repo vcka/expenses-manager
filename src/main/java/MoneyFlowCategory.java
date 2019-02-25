@@ -1,10 +1,10 @@
 import java.io.Serializable;
 
-class MoneyFlowCategory<N> implements Serializable {
+class MoneyFlowCategory implements Serializable {
     private Long categoryId = System.currentTimeMillis();
-    private N name;
+    private String name;
 
-    MoneyFlowCategory(N name) {
+    MoneyFlowCategory(String name) {
         this.name = name;
     }
 
@@ -12,7 +12,7 @@ class MoneyFlowCategory<N> implements Serializable {
         return categoryId;
     }
 
-    N getName() {
+    String getName() {
         return name;
     }
 }

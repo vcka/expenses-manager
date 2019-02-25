@@ -78,7 +78,7 @@ class MenuView {
             if (MenuUtil.choice == 0) break;
             switch (MenuUtil.choice) {
                 case 1:
-                    pemService.onAddCategory();
+                    pemService.onAddExpenseCategory();
                     MenuUtil.pressAnyEnterToContinue();
                     MenuUtil.clearScreen();
                     break;
@@ -98,7 +98,7 @@ class MenuView {
                     MenuUtil.clearScreen();
                     break;
                 case 5:
-                    pemService.onCategoryDelete();
+                    pemService.onExpenseCategoryDelete();
                     MenuUtil.pressAnyEnterToContinue();
                     MenuUtil.clearScreen();
                     break;
