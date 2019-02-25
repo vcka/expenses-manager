@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.util.Scanner;
 
 class MenuView {
-    private PEMService pemService = new PEMService();
+    public PEMService pemService = new PEMService();
     static Scanner in = new Scanner(System.in);
 
     private final static int frameWidth = 80;
+
+    MenuView() throws IOException, InterruptedException {
+    }
 
     static void printMenu() throws IOException, InterruptedException {
         printMenuHeader(Consts.MAIN_MENU);

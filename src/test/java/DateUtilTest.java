@@ -1,12 +1,16 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 class DateUtilTest {
     SimpleDateFormat df = new SimpleDateFormat("yyyy MM dd");
     PEMServiceHelper pemService = new PEMServiceHelper();
+
+    DateUtilTest() throws IOException, InterruptedException {
+    }
 
     @Test
     void dateToStringTest() throws ParseException {

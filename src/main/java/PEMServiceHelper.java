@@ -13,7 +13,7 @@ public class PEMServiceHelper {
         String catName = in.nextLine();
         if (catName.equals("")) return;
         if (checkForExistingCategory(catName, repository)) {
-            System.out.println("MoneyFlowCategory all ready exists.");
+            System.out.println("Category all ready exists.");
         } else {
             MoneyFlowCategory cat = new MoneyFlowCategory(catName);
             repository.getList().add(cat);
@@ -43,7 +43,7 @@ public class PEMServiceHelper {
             System.out.println(((MoneyFlow) repository.getList().get(nr - 1)).getDescription() + " will be removed.");
             repository.getList().remove(nr - 1);
         } else {
-            System.out.println("No such number.");
+            System.out.println("No such record.");
             MenuUtil.pressAnyEnterToContinue();
             MenuUtil.clearScreen();
             onFlowDelete(repository);
@@ -67,6 +67,39 @@ public class PEMServiceHelper {
             MenuView.printMySubMenuContent((i + 1) + ". " + catName + " - " + income.getAmount() + ", " + income.getDescription() + ", " + dateString);
         }
         MenuView.printMenuFooter();
+    }
+
+    void onCategoryDelete(IRepository repository) throws IOException, InterruptedException {
+        MenuUtil.clearScreen();
+        if (repository.getClass().getName().equals("IncomeCategoryIRepository$1")) {
+            PEMService.onIncomeCategoryList();
+        } else {
+            PEMService.onExpenseCategoryList();
+        }
+        System.out.print("Please enter the category nr. to remove: ");
+        String input = in.nextLine();
+        int nr = checkInput(input);
+        if (nr == 0) return;
+        if (nr <= repository.getList().size()) {
+            System.out.println("Category " + ((MoneyFlowCategory)repository.getList().get(nr - 1)).getName() + " will be removed.");
+            if (repository.getClass().getName().equals("IncomeCategoryIRepository$1")) {
+                PEMService.incomeRepository.getList().removeIf(
+                        moneyFlow -> moneyFlow.getCategoryId()
+                                .equals(((MoneyFlowCategory)repository.getList()
+                                        .get(nr - 1)).getCategoryId()));
+            } else {
+                PEMService.expenseRepository.getList().removeIf(
+                        moneyFlow -> moneyFlow.getCategoryId()
+                                .equals(((MoneyFlowCategory)repository.getList()
+                                        .get(nr - 1)).getCategoryId()));
+            }
+            repository.getList().remove(nr - 1);
+        } else if (!repository.getList().isEmpty()) {
+            System.out.println("No such category.");
+            MenuUtil.pressAnyEnterToContinue();
+            MenuUtil.clearScreen();
+//            onExpenseCategoryDelete();
+        }
     }
 
     @SuppressWarnings("unchecked")

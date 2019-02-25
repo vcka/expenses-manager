@@ -22,6 +22,7 @@ public class ExpenseCategoryIRepository implements IRepository {
         return moneyFlowCategoryList;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void setList(List list) {
         this.moneyFlowCategoryList = list;
@@ -35,6 +36,7 @@ public class ExpenseCategoryIRepository implements IRepository {
         oos.close();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void dataLoad() throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream("Categories.db");
