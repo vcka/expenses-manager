@@ -41,7 +41,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        Application
+                                        Application.Application
                                     </mainClass>
                                 </manifest>
                             </archive>
