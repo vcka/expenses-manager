@@ -44,10 +44,10 @@ public class PEMService {
         reportService.calculateExpenseCategoriesTotal()
                 .forEach((k, v) -> {
                     total.updateAndGet(v1 -> v1 + v);
-                    MenuView.printMySubMenuContent(k + " - (" + v + ")");
+                    MenuView.printMySubMenuContent(k + " - " + Math.abs(v));
                 });
         MenuView.printMenuFooter();
-        System.out.println("Categories total: " + total);
+        System.out.println("Categories total: " + Math.abs(total.get()));
     }
 
     public void onCategorizedIncomeList() throws IOException, InterruptedException {
@@ -57,10 +57,10 @@ public class PEMService {
         reportService.calculateIncomeCategoriesTotal()
                 .forEach((k, v) -> {
                     total.updateAndGet(v1 -> v1 + v);
-                    MenuView.printMySubMenuContent(k + " - (" + v + ")");
+                    MenuView.printMySubMenuContent(k + " - " + Math.abs(v));
                 });
         MenuView.printMenuFooter();
-        System.out.println("Categories total: " + total);
+        System.out.println("Categories total: " + Math.abs(total.get()));
     }
 
     public void onYearlyExpenseList() throws IOException, InterruptedException {
@@ -70,17 +70,17 @@ public class PEMService {
         reportService.calculateExpenseYearlyTotal()
                 .forEach((k, v) -> {
                     total.updateAndGet(v1 -> v1 + v);
-                    MenuView.printMySubMenuContent(k + " - (" + v + ")");
+                    MenuView.printMySubMenuContent(k + " - (" + Math.abs(v) + ")");
                 });
         MenuView.printMenuFooter();
-        System.out.println("Total expenses sum: " + total);
+        System.out.println("Total expenses sum: " + Math.abs(total.get()));
     }
 
     public void onMonthlyExpenseList() throws IOException, InterruptedException {
         MenuUtil.clearScreen();
         MenuView.printMenuHeader("Monthly expenses");
         reportService.calculateExpenseMonthlyTotal()
-                .forEach((k, v) -> MenuView.printMySubMenuContent(k + " - (" + v + ")"));
+                .forEach((k, v) -> MenuView.printMySubMenuContent(k + " - (" + Math.abs(v) + ")"));
         MenuView.printMenuFooter();
     }
 

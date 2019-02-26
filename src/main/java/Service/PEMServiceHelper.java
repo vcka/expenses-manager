@@ -73,7 +73,7 @@ public class PEMServiceHelper {
                 catName = reportService.getExpenseCategoryNameByID(income.getCategoryId());
             }
             String dateString = DateUtil.dateToString(income.getDate());
-            MenuView.printMySubMenuContent((i + 1) + ". " + catName + " - (" + income.getAmount() + "), " + income.getDescription() + ", " + dateString);
+            MenuView.printMySubMenuContent((i + 1) + ". " + catName + " - (" + Math.abs(income.getAmount()) + "), " + income.getDescription() + ", " + dateString);
         }
         MenuView.printMenuFooter();
     }
