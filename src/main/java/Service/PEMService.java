@@ -1,8 +1,20 @@
+package Service;
+
+import Application.DateUtil;
+import Expense.ExpenseCategoryIRepository;
+import Expense.ExpenseIRepository;
+import Income.IncomeCategoryIRepository;
+import Income.IncomeIRepository;
+import Menu.MenuUtil;
+import Menu.MenuView;
+import MoneyFlow.MoneyFlow;
+import MoneyFlow.MoneyFlowCategory;
+
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-class PEMService {
+public class PEMService {
     public static ExpenseIRepository expenseRepository = ExpenseIRepository.getRepository();
     public static ExpenseCategoryIRepository expenseCategoryRepository = ExpenseCategoryIRepository.getRepository();
     public static IncomeIRepository incomeRepository = IncomeIRepository.getRepository();
@@ -177,7 +189,7 @@ class PEMService {
         serviceHelper.onCategoryDelete(incomeCategoryRepository);
     }
 
-    void onExit() {
+    public void onExit() {
         try {
             expenseCategoryRepository.dataSave();
             expenseRepository.dataSave();

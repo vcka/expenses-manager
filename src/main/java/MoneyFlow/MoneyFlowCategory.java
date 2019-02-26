@@ -1,18 +1,20 @@
+package MoneyFlow;
+
 import java.io.Serializable;
 
-class MoneyFlowCategory implements Serializable {
+public class MoneyFlowCategory implements Serializable {
     private Long categoryId = System.currentTimeMillis();
     private String name;
 
-    MoneyFlowCategory(String name) {
+    public MoneyFlowCategory(String name) {
         this.name = name;
     }
 
-    Long getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 }

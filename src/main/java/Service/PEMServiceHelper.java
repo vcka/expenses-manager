@@ -1,3 +1,12 @@
+package Service;
+
+import Application.DateUtil;
+import Menu.MenuUtil;
+import Menu.MenuView;
+import MoneyFlow.IRepository;
+import MoneyFlow.MoneyFlow;
+import MoneyFlow.MoneyFlowCategory;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -54,11 +63,11 @@ public class PEMServiceHelper {
     void onList(IRepository repository) throws IOException, InterruptedException {
         String catName;
         MenuUtil.clearScreen();
-        MenuView.printMenuHeader(repository.getClass().getName().equals("IncomeIRepository$1") ? "Income list" : "Expenses list");
+        MenuView.printMenuHeader(repository.getClass().getName().equals("Income.IncomeIRepository$1") ? "Income list" : "Expenses list");
         List<MoneyFlow> incomeList = repository.getList();
         for (int i = 0; i < incomeList.size(); i++) {
             MoneyFlow income = incomeList.get(i);
-            if (repository.getClass().getName().equals("IncomeIRepository$1")) {
+            if (repository.getClass().getName().equals("Income.IncomeIRepository$1")) {
                 catName = reportService.getIncomeCategoryNameByID(income.getCategoryId());
             } else {
                 catName = reportService.getExpenseCategoryNameByID(income.getCategoryId());
@@ -71,7 +80,7 @@ public class PEMServiceHelper {
 
     void onCategoryDelete(IRepository repository) throws IOException, InterruptedException {
         MenuUtil.clearScreen();
-        if (repository.getClass().getName().equals("IncomeCategoryIRepository$1")) {
+        if (repository.getClass().getName().equals("Income.IncomeCategoryIRepository$1")) {
             PEMService.onIncomeCategoryList();
         } else {
             PEMService.onExpenseCategoryList();
@@ -82,7 +91,7 @@ public class PEMServiceHelper {
         if (nr == 0) return;
         if (nr <= repository.getList().size()) {
             System.out.println("Category " + ((MoneyFlowCategory)repository.getList().get(nr - 1)).getName() + " will be removed.");
-            if (repository.getClass().getName().equals("IncomeCategoryIRepository$1")) {
+            if (repository.getClass().getName().equals("Income.IncomeCategoryIRepository$1")) {
                 PEMService.incomeRepository.getList().removeIf(
                         moneyFlow -> moneyFlow.getCategoryId()
                                 .equals(((MoneyFlowCategory)repository.getList()
@@ -108,7 +117,7 @@ public class PEMServiceHelper {
                 .anyMatch(moneyFlowCategory -> ((MoneyFlowCategory) moneyFlowCategory).getName().equals(catName));
     }
 
-    int checkInput(String input) {
+    public int checkInput(String input) {
         if (input.isEmpty()) return 0;
         if (input.matches("\\d")) {
             return Integer.parseInt(input);
@@ -119,7 +128,7 @@ public class PEMServiceHelper {
         return 0;
     }
 
-    double parseToDouble(String input) {
+    public double parseToDouble(String input) {
         double value = 0D;
         try {
             value = Double.parseDouble(input);

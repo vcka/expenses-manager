@@ -1,3 +1,8 @@
+package Application;
+
+import Menu.MenuUtil;
+import Menu.MenuView;
+
 import java.io.IOException;
 
 public class Application {

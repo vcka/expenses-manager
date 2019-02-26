@@ -1,45 +1,47 @@
+package MoneyFlow;
+
 import java.io.Serializable;
 import java.util.Date;
 
-class MoneyFlow implements Serializable {
+public class MoneyFlow implements Serializable {
 
     private Long categoryId;
     private Double amount;
     private Date date;
     private String description;
 
-    MoneyFlow() {
+    public MoneyFlow() {
     }
 
-    Long getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    void setCategoryId(Long categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 
-    Double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    void setAmount(Double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
-    Date getDate() {
+    public Date getDate() {
         return date;
     }
 
-    void setDate(Date date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    String  getDescription() {
+    public String  getDescription() {
         return description;
     }
 
-    void setDescription(String  description) {
+    public void setDescription(String  description) {
         this.description = description;
     }
 }

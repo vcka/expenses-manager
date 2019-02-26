@@ -1,25 +1,29 @@
+package Menu;
+
+import Application.Consts;
+import Service.PEMService;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.Scanner;
 
-class MenuView {
+public class MenuView {
     public PEMService pemService = new PEMService();
-    static Scanner in = new Scanner(System.in);
+    public static Scanner in = new Scanner(System.in);
 
     private final static int frameWidth = 80;
 
-    MenuView() throws IOException, InterruptedException {
+    public MenuView() throws IOException, InterruptedException {
     }
 
-    static void printMenu() throws IOException, InterruptedException {
+    public static void printMenu() throws IOException, InterruptedException {
         printMenuHeader(Consts.MAIN_MENU);
         printMyMainMenu(Consts.EXPENSES_MENU, Consts.INCOME_MENU, Consts.REPORTS_MENU, Consts.EXIT);
         System.out.print("Enter your choice: ");
         MenuUtil.checkInput(in.nextLine());
     }
 
-    void mainMenuLoop() throws IOException, InterruptedException {
+    public void mainMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtil.clearScreen();
             printMenu();
@@ -43,7 +47,7 @@ class MenuView {
         }
     }
 
-    private void reportsMenuLoop() throws IOException, InterruptedException {
+    public void reportsMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtil.clearScreen();
             MenuView.printMenuHeader(Consts.REPORTS_MENU);
@@ -71,7 +75,7 @@ class MenuView {
         }
     }
 
-    private void expenseMenuLoop() throws IOException, InterruptedException {
+    public void expenseMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtil.clearScreen();
             MenuView.printMenuHeader(Consts.EXPENSES_SUB_MENU);
@@ -114,7 +118,7 @@ class MenuView {
         }
     }
 
-    private void incomeMenuLoop() throws IOException, InterruptedException {
+    public void incomeMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtil.clearScreen();
             MenuView.printMenuHeader(Consts.INCOME_SUB_MENU);
@@ -157,7 +161,7 @@ class MenuView {
         }
     }
 
-    private static void printMyMainMenu(String... menuCategories) {
+    public static void printMyMainMenu(String... menuCategories) {
         final String x = StringUtils.rightPad("+", frameWidth - 1, "-") + "+";
         for (int i = 0; i < menuCategories.length; i++) {
             if (i == 9) {
@@ -169,17 +173,17 @@ class MenuView {
         System.out.println(x);
     }
 
-    static void printMenuHeader(String header) {
+    public static void printMenuHeader(String header) {
         System.out.println(StringUtils.rightPad("+", frameWidth - 1, "-") + "+");
         System.out.println(StringUtils.center(StringUtils.center(header, frameWidth - 2), frameWidth, "|"));
         System.out.println(StringUtils.rightPad("+", frameWidth - 1, "-") + "+");
     }
 
-    static void printMenuFooter() {
+    public static void printMenuFooter() {
         System.out.println(StringUtils.rightPad("+", frameWidth - 1, "-") + "+");
     }
 
-    static void printMySubMenuContent(String... menuCategories) {
+    public static void printMySubMenuContent(String... menuCategories) {
         for (String menuCategory : menuCategories) {
             System.out.println(StringUtils.center(StringUtils.rightPad(" " + menuCategory, frameWidth - 2), frameWidth, "|"));
         }

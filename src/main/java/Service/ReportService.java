@@ -1,14 +1,24 @@
+package Service;
+
+import Application.DateUtil;
+import Expense.ExpenseCategoryIRepository;
+import Expense.ExpenseIRepository;
+import Income.IncomeCategoryIRepository;
+import Income.IncomeIRepository;
+import MoneyFlow.IRepository;
+import MoneyFlow.MoneyFlowCategory;
+
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-class ReportService {
+public class ReportService {
     private final ExpenseIRepository expenseRepository = ExpenseIRepository.getRepository();
     private final ExpenseCategoryIRepository expenseCategoryRepository = ExpenseCategoryIRepository.getRepository();
     private final IncomeIRepository incomeRepository = IncomeIRepository.getRepository();
     private final IncomeCategoryIRepository incomeCategoryRepository = IncomeCategoryIRepository.getRepository();
 
-    Map<String, Double> calculateMonthlyTotal() {
+    public Map<String, Double> calculateMonthlyTotal() {
         Map<String, Double> map = expenseRepository.getList().stream()
                 .collect(Collectors.groupingBy
                         (expense -> DateUtil.getYearAndMonth(expense.getDate()),
@@ -16,7 +26,7 @@ class ReportService {
         return new TreeMap<>(map);
     }
 
-    Map<Integer, Double> calculateYearlyTotal() {
+    public Map<Integer, Double> calculateYearlyTotal() {
         Map<Integer, Double> map = expenseRepository.getList().stream()
                 .collect(Collectors.groupingBy
                         (expense -> DateUtil.getYear(expense.getDate()),
@@ -24,7 +34,7 @@ class ReportService {
         return new TreeMap<>(map);
     }
 
-    Map<String, Double> calculateCategoriesTotal() {
+    public Map<String, Double> calculateCategoriesTotal() {
         Map<String, Double> map = expenseRepository.getList().stream()
                 .collect(Collectors.groupingBy
                         (expense -> getExpenseCategoryNameByID(expense.getCategoryId()),
@@ -32,11 +42,11 @@ class ReportService {
         return new TreeMap<>(map);
     }
 
-    String getExpenseCategoryNameByID(Long categoryId) {
+    public String getExpenseCategoryNameByID(Long categoryId) {
         return getCategoryNameByID(categoryId, expenseCategoryRepository);
     }
 
-    String getIncomeCategoryNameByID(Long categoryId) {
+    public String getIncomeCategoryNameByID(Long categoryId) {
         return getCategoryNameByID(categoryId, incomeCategoryRepository);
     }
     @SuppressWarnings("unchecked")

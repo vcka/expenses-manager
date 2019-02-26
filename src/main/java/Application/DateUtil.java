@@ -1,9 +1,11 @@
+package Application;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-class DateUtil {
-    static Date stringToDate(String dateAsString){
+public class DateUtil {
+    public static Date stringToDate(String dateAsString){
         SimpleDateFormat df = new SimpleDateFormat("yyyy MM dd");
         try {
             return df.parse(dateAsString);
@@ -12,16 +14,16 @@ class DateUtil {
             return null;
         }
     }
-    static String dateToString(Date date){
+    public static String dateToString(Date date){
         SimpleDateFormat df = new SimpleDateFormat("yyyy MM dd");
         return df.format(date);
 
     }
-    static String getYearAndMonth(Date date){
+    public static String getYearAndMonth(Date date){
         SimpleDateFormat df = new SimpleDateFormat("yyyy MM");
         return df.format(date);
     }
-    static Integer getYear(Date date){
+    public static Integer getYear(Date date){
         SimpleDateFormat df = new SimpleDateFormat("yyyy");
         return new Integer(df.format(date));
     }

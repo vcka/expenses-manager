@@ -1,25 +1,31 @@
+package Income;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpenseCategoryIRepository implements IRepository {
-    private List<MoneyFlowCategory> moneyFlowCategoryList = new ArrayList<>();
-    private static ExpenseCategoryIRepository expenseCategoryRepository;
+import Application.Consts;
+import MoneyFlow.IRepository;
+import MoneyFlow.MoneyFlowCategory;
 
-    private ExpenseCategoryIRepository() {
+public class IncomeCategoryIRepository implements IRepository {
+    private List<MoneyFlowCategory> moneyFlowCategoryList = new ArrayList<>();
+    private static IncomeCategoryIRepository incomeCategoryRepository;
+
+    private IncomeCategoryIRepository() {
     }
 
-    static ExpenseCategoryIRepository getRepository() {
-        if (expenseCategoryRepository == null) {
-            expenseCategoryRepository = new ExpenseCategoryIRepository() {
+    public static IncomeCategoryIRepository getRepository() {
+        if (incomeCategoryRepository == null) {
+            incomeCategoryRepository = new IncomeCategoryIRepository() {
             };
         }
-        return expenseCategoryRepository;
+        return incomeCategoryRepository;
     }
 
     @Override
     public List<MoneyFlowCategory> getList() {
-        return moneyFlowCategoryList;
+        return this.moneyFlowCategoryList;
     }
 
     @SuppressWarnings("unchecked")
@@ -30,7 +36,7 @@ public class ExpenseCategoryIRepository implements IRepository {
 
     @Override
     public void dataSave() throws IOException {
-        FileOutputStream fos = new FileOutputStream("Categories.db");
+        FileOutputStream fos = new FileOutputStream(Consts.INCOME_CATEGORIES_DB);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(moneyFlowCategoryList);
         oos.close();
@@ -39,7 +45,7 @@ public class ExpenseCategoryIRepository implements IRepository {
     @SuppressWarnings("unchecked")
     @Override
     public void dataLoad() throws IOException, ClassNotFoundException {
-        FileInputStream fis = new FileInputStream("Categories.db");
+        FileInputStream fis = new FileInputStream(Consts.INCOME_CATEGORIES_DB);
         ObjectInputStream ois = new ObjectInputStream(fis);
         setList((List<MoneyFlowCategory>) ois.readObject());
         ois.close();

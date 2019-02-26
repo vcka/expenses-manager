@@ -1,25 +1,31 @@
+package Expense;
+
+import Application.Consts;
+import MoneyFlow.IRepository;
+import MoneyFlow.MoneyFlowCategory;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IncomeCategoryIRepository implements IRepository {
+public class ExpenseCategoryIRepository implements IRepository {
     private List<MoneyFlowCategory> moneyFlowCategoryList = new ArrayList<>();
-    private static IncomeCategoryIRepository incomeCategoryRepository;
+    private static ExpenseCategoryIRepository expenseCategoryRepository;
 
-    private IncomeCategoryIRepository() {
+    private ExpenseCategoryIRepository() {
     }
 
-    static IncomeCategoryIRepository getRepository() {
-        if (incomeCategoryRepository == null) {
-            incomeCategoryRepository = new IncomeCategoryIRepository() {
+    public static ExpenseCategoryIRepository getRepository() {
+        if (expenseCategoryRepository == null) {
+            expenseCategoryRepository = new ExpenseCategoryIRepository() {
             };
         }
-        return incomeCategoryRepository;
+        return expenseCategoryRepository;
     }
 
     @Override
     public List<MoneyFlowCategory> getList() {
-        return this.moneyFlowCategoryList;
+        return moneyFlowCategoryList;
     }
 
     @SuppressWarnings("unchecked")
@@ -30,7 +36,7 @@ public class IncomeCategoryIRepository implements IRepository {
 
     @Override
     public void dataSave() throws IOException {
-        FileOutputStream fos = new FileOutputStream("Income-Categories.db");
+        FileOutputStream fos = new FileOutputStream(Consts.CATEGORIES_DB);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(moneyFlowCategoryList);
         oos.close();
@@ -39,7 +45,7 @@ public class IncomeCategoryIRepository implements IRepository {
     @SuppressWarnings("unchecked")
     @Override
     public void dataLoad() throws IOException, ClassNotFoundException {
-        FileInputStream fis = new FileInputStream("Income-Categories.db");
+        FileInputStream fis = new FileInputStream(Consts.CATEGORIES_DB);
         ObjectInputStream ois = new ObjectInputStream(fis);
         setList((List<MoneyFlowCategory>) ois.readObject());
         ois.close();
