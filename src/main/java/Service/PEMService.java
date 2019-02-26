@@ -1,6 +1,6 @@
 package Service;
 
-import Application.DateUtil;
+import Util.DateUtil;
 import Expense.ExpenseCategoryIRepository;
 import Expense.ExpenseIRepository;
 import Income.IncomeCategoryIRepository;
@@ -41,10 +41,23 @@ public class PEMService {
         MenuUtil.clearScreen();
         MenuView.printMenuHeader("Categorized expenses");
         AtomicReference<Double> total = new AtomicReference<>(0.0D);
-        reportService.calculateCategoriesTotal()
+        reportService.calculateExpenseCategoriesTotal()
                 .forEach((k, v) -> {
                     total.updateAndGet(v1 -> v1 + v);
-                    MenuView.printMySubMenuContent(k + " - " + v);
+                    MenuView.printMySubMenuContent(k + " - (" + v + ")");
+                });
+        MenuView.printMenuFooter();
+        System.out.println("Categories total: " + total);
+    }
+
+    public void onCategorizedIncomeList() throws IOException, InterruptedException {
+        MenuUtil.clearScreen();
+        MenuView.printMenuHeader("Categorized income");
+        AtomicReference<Double> total = new AtomicReference<>(0.0D);
+        reportService.calculateIncomeCategoriesTotal()
+                .forEach((k, v) -> {
+                    total.updateAndGet(v1 -> v1 + v);
+                    MenuView.printMySubMenuContent(k + " - (" + v + ")");
                 });
         MenuView.printMenuFooter();
         System.out.println("Categories total: " + total);
@@ -54,10 +67,10 @@ public class PEMService {
         MenuUtil.clearScreen();
         MenuView.printMenuHeader("Yearly expenses");
         AtomicReference<Double> total = new AtomicReference<>(0.0D);
-        reportService.calculateYearlyTotal()
+        reportService.calculateExpenseYearlyTotal()
                 .forEach((k, v) -> {
                     total.updateAndGet(v1 -> v1 + v);
-                    MenuView.printMySubMenuContent(k + " - " + v);
+                    MenuView.printMySubMenuContent(k + " - (" + v + ")");
                 });
         MenuView.printMenuFooter();
         System.out.println("Total expenses sum: " + total);
@@ -66,8 +79,32 @@ public class PEMService {
     public void onMonthlyExpenseList() throws IOException, InterruptedException {
         MenuUtil.clearScreen();
         MenuView.printMenuHeader("Monthly expenses");
-        reportService.calculateMonthlyTotal()
-                .forEach((k, v) -> MenuView.printMySubMenuContent(k + " - " + v));
+        reportService.calculateExpenseMonthlyTotal()
+                .forEach((k, v) -> MenuView.printMySubMenuContent(k + " - (" + v + ")"));
+        MenuView.printMenuFooter();
+    }
+
+    public void onMonthlyIncomeList() throws IOException, InterruptedException {
+        MenuUtil.clearScreen();
+        MenuView.printMenuHeader("Monthly income");
+        reportService.calculateIncomeMonthlyTotal()
+                .forEach((k, v) -> MenuView.printMySubMenuContent(k + " - (" + v + ")"));
+        MenuView.printMenuFooter();
+    }
+
+    public void onMonthlyBudget() throws IOException, InterruptedException {
+        MenuUtil.clearScreen();
+        MenuView.printMenuHeader("Monthly budget");
+        reportService.calculateBudgetMonthlyTotal()
+                .forEach((k, v) -> MenuView.printMySubMenuContent(k + " - (" + v + ")"));
+        MenuView.printMenuFooter();
+    }
+
+    public void onYearlyBudget() throws IOException, InterruptedException {
+        MenuUtil.clearScreen();
+        MenuView.printMenuHeader("Yearly budget");
+        reportService.calculateBudgetYearlyTotal()
+                .forEach((k, v) -> MenuView.printMySubMenuContent(k + " - (" + v +")"));
         MenuView.printMenuFooter();
     }
 
@@ -96,7 +133,7 @@ public class PEMService {
             while (date == null);
             MoneyFlow moneyFlow = new MoneyFlow();
             moneyFlow.setCategoryId(selectedMoneyFlowCategory.getCategoryId());
-            moneyFlow.setAmount(amount);
+            moneyFlow.setAmount(-amount);
             moneyFlow.setDescription(description);
             moneyFlow.setDate(date);
             //Store moneyFlow

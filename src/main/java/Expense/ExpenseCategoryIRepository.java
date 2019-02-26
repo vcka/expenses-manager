@@ -1,6 +1,6 @@
 package Expense;
 
-import Application.Consts;
+import Util.Constants;
 import MoneyFlow.IRepository;
 import MoneyFlow.MoneyFlowCategory;
 
@@ -36,7 +36,7 @@ public class ExpenseCategoryIRepository implements IRepository {
 
     @Override
     public void dataSave() throws IOException {
-        FileOutputStream fos = new FileOutputStream(Consts.CATEGORIES_DB);
+        FileOutputStream fos = new FileOutputStream(Constants.CATEGORIES_DB);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(moneyFlowCategoryList);
         oos.close();
@@ -45,7 +45,7 @@ public class ExpenseCategoryIRepository implements IRepository {
     @SuppressWarnings("unchecked")
     @Override
     public void dataLoad() throws IOException, ClassNotFoundException {
-        FileInputStream fis = new FileInputStream(Consts.CATEGORIES_DB);
+        FileInputStream fis = new FileInputStream(Constants.CATEGORIES_DB);
         ObjectInputStream ois = new ObjectInputStream(fis);
         setList((List<MoneyFlowCategory>) ois.readObject());
         ois.close();

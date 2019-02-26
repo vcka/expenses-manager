@@ -1,6 +1,6 @@
 package Service;
 
-import Application.DateUtil;
+import Util.DateUtil;
 import Menu.MenuUtil;
 import Menu.MenuView;
 import MoneyFlow.IRepository;
@@ -73,7 +73,7 @@ public class PEMServiceHelper {
                 catName = reportService.getExpenseCategoryNameByID(income.getCategoryId());
             }
             String dateString = DateUtil.dateToString(income.getDate());
-            MenuView.printMySubMenuContent((i + 1) + ". " + catName + " - " + income.getAmount() + ", " + income.getDescription() + ", " + dateString);
+            MenuView.printMySubMenuContent((i + 1) + ". " + catName + " - (" + income.getAmount() + "), " + income.getDescription() + ", " + dateString);
         }
         MenuView.printMenuFooter();
     }
@@ -107,7 +107,7 @@ public class PEMServiceHelper {
             System.out.println("No such category.");
             MenuUtil.pressAnyEnterToContinue();
             MenuUtil.clearScreen();
-//            onExpenseCategoryDelete();
+            onCategoryDelete(repository);
         }
     }
 

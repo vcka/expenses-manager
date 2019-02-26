@@ -1,6 +1,6 @@
 package Menu;
 
-import Application.Consts;
+import Util.Constants;
 import Service.PEMService;
 import org.apache.commons.lang3.StringUtils;
 
@@ -17,8 +17,8 @@ public class MenuView {
     }
 
     public static void printMenu() throws IOException, InterruptedException {
-        printMenuHeader(Consts.MAIN_MENU);
-        printMyMainMenu(Consts.EXPENSES_MENU, Consts.INCOME_MENU, Consts.REPORTS_MENU, Consts.EXIT);
+        printMenuHeader(Constants.MAIN_MENU);
+        printMyMainMenu(Constants.EXPENSES_MENU, Constants.INCOME_MENU, Constants.REPORTS_MENU, Constants.EXIT);
         System.out.print("Enter your choice: ");
         MenuUtil.checkInput(in.nextLine());
     }
@@ -50,8 +50,9 @@ public class MenuView {
     public void reportsMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtil.clearScreen();
-            MenuView.printMenuHeader(Consts.REPORTS_MENU);
-            printMyMainMenu(Consts.MONTHLY_EXPENSES, Consts.YEARLY_EXPENSES, Consts.CATEGORIZED_EXPENSES_LIST);
+            MenuView.printMenuHeader(Constants.REPORTS_MENU);
+            printMyMainMenu(Constants.MONTHLY_EXPENSES, Constants.YEARLY_EXPENSES, Constants.CATEGORIZED_EXPENSES_LIST,
+                    Constants.CATEGORIZED_INCOME_LIST, Constants.MONTHLY_INCOME, Constants.MONTHLY_BUDGET, Constants.YEARLY_BUDGET);
             System.out.print("Enter your choice: ");
             MenuUtil.checkInput(in.nextLine());
             if (MenuUtil.choice == 0) break;
@@ -71,6 +72,26 @@ public class MenuView {
                     MenuUtil.pressAnyEnterToContinue();
                     MenuUtil.clearScreen();
                     break;
+                case 4:
+                    pemService.onCategorizedIncomeList();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
+                    break;
+                case 5:
+                    pemService.onMonthlyIncomeList();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
+                    break;
+                case 6:
+                    pemService.onMonthlyBudget();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
+                    break;
+                case 7:
+                    pemService.onYearlyBudget();
+                    MenuUtil.pressAnyEnterToContinue();
+                    MenuUtil.clearScreen();
+                    break;
             }
         }
     }
@@ -78,8 +99,8 @@ public class MenuView {
     public void expenseMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtil.clearScreen();
-            MenuView.printMenuHeader(Consts.EXPENSES_SUB_MENU);
-            printMyMainMenu(Consts.ADD_EXPENSE_CATEGORY, Consts.LIST_EXPENSES_CATEGORIES, Consts.ADD_EXPENSE, Consts.LIST_EXPENSES, Consts.DELETE_EXPENSE_CATEGORY, Consts.DELETE_EXPENSE);
+            MenuView.printMenuHeader(Constants.EXPENSES_SUB_MENU);
+            printMyMainMenu(Constants.ADD_EXPENSE_CATEGORY, Constants.LIST_EXPENSES_CATEGORIES, Constants.ADD_EXPENSE, Constants.LIST_EXPENSES, Constants.DELETE_EXPENSE_CATEGORY, Constants.DELETE_EXPENSE);
             System.out.print("Enter your choice: ");
             MenuUtil.checkInput(in.nextLine());
             if (MenuUtil.choice == 0) break;
@@ -121,8 +142,8 @@ public class MenuView {
     public void incomeMenuLoop() throws IOException, InterruptedException {
         while (true) {
             MenuUtil.clearScreen();
-            MenuView.printMenuHeader(Consts.INCOME_SUB_MENU);
-            printMyMainMenu(Consts.ADD_INCOME_CATEGORY, Consts.LIST_INCOMES_CATEGORIES, Consts.ADD_INCOME, Consts.LIST_INCOMES, Consts.DELETE_INCOME_CATEGORY, Consts.DELETE_INCOME);
+            MenuView.printMenuHeader(Constants.INCOME_SUB_MENU);
+            printMyMainMenu(Constants.ADD_INCOME_CATEGORY, Constants.LIST_INCOMES_CATEGORIES, Constants.ADD_INCOME, Constants.LIST_INCOMES, Constants.DELETE_INCOME_CATEGORY, Constants.DELETE_INCOME);
             System.out.print("Enter your choice: ");
             MenuUtil.checkInput(in.nextLine());
             if (MenuUtil.choice == 0) break;

@@ -1,6 +1,6 @@
 package Menu;
 
-import Application.Application;
+import Application.MainApp;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,7 @@ public class MenuUtil {
     public static void initConsole(String[] args) throws IOException {
         if (args.length == 0) {
             Process p = Runtime.getRuntime().exec("cmd.exe /c start java -jar " +
-                    (new File(Application.class.getProtectionDomain().getCodeSource().getLocation().getPath())).getAbsolutePath() + " cmd");
+                    (new File(MainApp.class.getProtectionDomain().getCodeSource().getLocation().getPath())).getAbsolutePath() + " cmd");
         }
     }
 

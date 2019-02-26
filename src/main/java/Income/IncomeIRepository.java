@@ -1,6 +1,6 @@
 package Income;
 
-import Application.Consts;
+import Util.Constants;
 import MoneyFlow.IRepository;
 import MoneyFlow.MoneyFlow;
 
@@ -37,7 +37,7 @@ public class IncomeIRepository implements IRepository {
 
     @Override
     public void dataSave() throws IOException {
-        FileOutputStream fos = new FileOutputStream(Consts.INCOME_DB);
+        FileOutputStream fos = new FileOutputStream(Constants.INCOME_DB);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(moneyFlowList);
         oos.close();
@@ -46,7 +46,7 @@ public class IncomeIRepository implements IRepository {
     @SuppressWarnings("unchecked")
     @Override
     public void dataLoad() throws IOException, ClassNotFoundException {
-        FileInputStream fis = new FileInputStream(Consts.INCOME_DB);
+        FileInputStream fis = new FileInputStream(Constants.INCOME_DB);
         ObjectInputStream ois = new ObjectInputStream(fis);
         setList((List<MoneyFlow>) ois.readObject());
         ois.close();

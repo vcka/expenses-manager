@@ -1,6 +1,6 @@
-package Application;
+package Util;
 
-public final class Consts {
+public final class Constants {
     public static final String MAIN_MENU = "Main menu";
     public static final String INCOME_MENU = "Income menu";
     public static final String EXPENSES_MENU = "Expenses menu";
@@ -10,6 +10,10 @@ public final class Consts {
     public static final String MONTHLY_EXPENSES = "Monthly expenses";
     public static final String YEARLY_EXPENSES = "Yearly expenses";
     public static final String CATEGORIZED_EXPENSES_LIST = "Categorized expenses list";
+    public static final String CATEGORIZED_INCOME_LIST = "Categorized income list";
+    public static final String MONTHLY_INCOME = "Monthly income";
+    public static final String MONTHLY_BUDGET = "Monthly budget";
+    public static final String YEARLY_BUDGET = "Yearly budget";
 
     public static final String EXPENSES_SUB_MENU = "Expenses menu";
     public static final String ADD_EXPENSE_CATEGORY = "Add expense category";
@@ -31,4 +35,6 @@ public final class Consts {
     public static final String INCOME_CATEGORIES_DB = "Income-Categories.db";
     public static final String EXPENSES_DB = "Expenses.db";
     public static final String CATEGORIES_DB = "Categories.db";
+
+
 }

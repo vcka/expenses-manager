@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import Application.Consts;
+import Util.Constants;
 import MoneyFlow.IRepository;
 import MoneyFlow.MoneyFlowCategory;
 
@@ -36,7 +36,7 @@ public class IncomeCategoryIRepository implements IRepository {
 
     @Override
     public void dataSave() throws IOException {
-        FileOutputStream fos = new FileOutputStream(Consts.INCOME_CATEGORIES_DB);
+        FileOutputStream fos = new FileOutputStream(Constants.INCOME_CATEGORIES_DB);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(moneyFlowCategoryList);
         oos.close();
@@ -45,7 +45,7 @@ public class IncomeCategoryIRepository implements IRepository {
     @SuppressWarnings("unchecked")
     @Override
     public void dataLoad() throws IOException, ClassNotFoundException {
-        FileInputStream fis = new FileInputStream(Consts.INCOME_CATEGORIES_DB);
+        FileInputStream fis = new FileInputStream(Constants.INCOME_CATEGORIES_DB);
         ObjectInputStream ois = new ObjectInputStream(fis);
         setList((List<MoneyFlowCategory>) ois.readObject());
         ois.close();

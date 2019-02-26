@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import Application.DateUtil;
+import Util.DateUtil;
 
 class DateUtilTest {
     SimpleDateFormat df = new SimpleDateFormat("yyyy MM dd");
