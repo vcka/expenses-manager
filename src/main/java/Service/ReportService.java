@@ -1,12 +1,12 @@
 package Service;
 
+import Expense.ExpenseRepository;
+import Income.IncomeCategoryRepository;
 import MoneyFlow.MoneyFlow;
 import Util.DateUtil;
-import Expense.ExpenseCategoryIRepository;
-import Expense.ExpenseIRepository;
-import Income.IncomeCategoryIRepository;
-import Income.IncomeIRepository;
-import MoneyFlow.IRepository;
+import Expense.ExpenseCategoryRepository;
+import Income.IncomeRepository;
+import MoneyFlow.Repository;
 import MoneyFlow.MoneyFlowCategory;
 
 import java.util.Map;
@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ReportService {
-    private final ExpenseIRepository expenseRepository = ExpenseIRepository.getRepository();
-    private final ExpenseCategoryIRepository expenseCategoryRepository = ExpenseCategoryIRepository.getRepository();
-    private final IncomeIRepository incomeRepository = IncomeIRepository.getRepository();
-    private final IncomeCategoryIRepository incomeCategoryRepository = IncomeCategoryIRepository.getRepository();
+    private final ExpenseRepository expenseRepository = ExpenseRepository.getRepository();
+    private final ExpenseCategoryRepository expenseCategoryRepository = ExpenseCategoryRepository.getRepository();
+    private final IncomeRepository incomeRepository = IncomeRepository.getRepository();
+    private final IncomeCategoryRepository incomeCategoryRepository = IncomeCategoryRepository.getRepository();
 
     public Map<String, Double> calculateExpenseMonthlyTotal() {
 //        Map<String, Double> map = expenseRepository.getList().stream()
@@ -37,7 +37,7 @@ public class ReportService {
     }
 
     @SuppressWarnings("unchecked")
-    public Map<String, Double> calculateMonthlyTotal(IRepository repository) {
+    public Map<String, Double> calculateMonthlyTotal(Repository repository) {
         Map<String, Double> map = (Map<String, Double>) repository.getList().stream()
                 .collect(Collectors.groupingBy(exp -> DateUtil.getYearAndMonth(((MoneyFlow)exp).getDate()),
                         Collectors.summingDouble(expense -> ((MoneyFlow)expense).getAmount())));
@@ -113,7 +113,7 @@ public class ReportService {
         return getCategoryNameByID(categoryId, incomeCategoryRepository);
     }
     @SuppressWarnings("unchecked")
-    private String getCategoryNameByID(Long categoryId, IRepository repository) {
+    private String getCategoryNameByID(Long categoryId, Repository repository) {
         return repository.getList().stream()
                 .filter(category -> ((MoneyFlowCategory)category).getCategoryId().equals(categoryId))
                 .map(name -> ((MoneyFlowCategory)name).getName())//IncomeCategory::getName

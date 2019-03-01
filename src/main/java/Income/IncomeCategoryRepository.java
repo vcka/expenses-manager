@@ -1,31 +1,31 @@
-package Expense;
-
-import Util.Constants;
-import MoneyFlow.IRepository;
-import MoneyFlow.MoneyFlowCategory;
+package Income;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpenseCategoryIRepository implements IRepository {
-    private List<MoneyFlowCategory> moneyFlowCategoryList = new ArrayList<>();
-    private static ExpenseCategoryIRepository expenseCategoryRepository;
+import MoneyFlow.Repository;
+import Util.Constants;
+import MoneyFlow.MoneyFlowCategory;
 
-    private ExpenseCategoryIRepository() {
+public class IncomeCategoryRepository implements Repository {
+    private List<MoneyFlowCategory> moneyFlowCategoryList = new ArrayList<>();
+    private static IncomeCategoryRepository incomeCategoryRepository;
+
+    private IncomeCategoryRepository() {
     }
 
-    public static ExpenseCategoryIRepository getRepository() {
-        if (expenseCategoryRepository == null) {
-            expenseCategoryRepository = new ExpenseCategoryIRepository() {
+    public static IncomeCategoryRepository getRepository() {
+        if (incomeCategoryRepository == null) {
+            incomeCategoryRepository = new IncomeCategoryRepository() {
             };
         }
-        return expenseCategoryRepository;
+        return incomeCategoryRepository;
     }
 
     @Override
     public List<MoneyFlowCategory> getList() {
-        return moneyFlowCategoryList;
+        return this.moneyFlowCategoryList;
     }
 
     @SuppressWarnings("unchecked")
@@ -36,7 +36,7 @@ public class ExpenseCategoryIRepository implements IRepository {
 
     @Override
     public void dataSave() throws IOException {
-        FileOutputStream fos = new FileOutputStream(Constants.CATEGORIES_DB);
+        FileOutputStream fos = new FileOutputStream(Constants.INCOME_CATEGORIES_DB);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(moneyFlowCategoryList);
         oos.close();
@@ -45,7 +45,7 @@ public class ExpenseCategoryIRepository implements IRepository {
     @SuppressWarnings("unchecked")
     @Override
     public void dataLoad() throws IOException, ClassNotFoundException {
-        FileInputStream fis = new FileInputStream(Constants.CATEGORIES_DB);
+        FileInputStream fis = new FileInputStream(Constants.INCOME_CATEGORIES_DB);
         ObjectInputStream ois = new ObjectInputStream(fis);
         setList((List<MoneyFlowCategory>) ois.readObject());
         ois.close();

@@ -1,31 +1,31 @@
-package Income;
+package Expense;
+
+import Util.Constants;
+import MoneyFlow.Repository;
+import MoneyFlow.MoneyFlowCategory;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import Util.Constants;
-import MoneyFlow.IRepository;
-import MoneyFlow.MoneyFlowCategory;
-
-public class IncomeCategoryIRepository implements IRepository {
+public class ExpenseCategoryRepository implements Repository {
     private List<MoneyFlowCategory> moneyFlowCategoryList = new ArrayList<>();
-    private static IncomeCategoryIRepository incomeCategoryRepository;
+    private static ExpenseCategoryRepository expenseCategoryRepository;
 
-    private IncomeCategoryIRepository() {
+    private ExpenseCategoryRepository() {
     }
 
-    public static IncomeCategoryIRepository getRepository() {
-        if (incomeCategoryRepository == null) {
-            incomeCategoryRepository = new IncomeCategoryIRepository() {
+    public static ExpenseCategoryRepository getRepository() {
+        if (expenseCategoryRepository == null) {
+            expenseCategoryRepository = new ExpenseCategoryRepository() {
             };
         }
-        return incomeCategoryRepository;
+        return expenseCategoryRepository;
     }
 
     @Override
     public List<MoneyFlowCategory> getList() {
-        return this.moneyFlowCategoryList;
+        return moneyFlowCategoryList;
     }
 
     @SuppressWarnings("unchecked")
@@ -36,7 +36,7 @@ public class IncomeCategoryIRepository implements IRepository {
 
     @Override
     public void dataSave() throws IOException {
-        FileOutputStream fos = new FileOutputStream(Constants.INCOME_CATEGORIES_DB);
+        FileOutputStream fos = new FileOutputStream(Constants.CATEGORIES_DB);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(moneyFlowCategoryList);
         oos.close();
@@ -45,7 +45,7 @@ public class IncomeCategoryIRepository implements IRepository {
     @SuppressWarnings("unchecked")
     @Override
     public void dataLoad() throws IOException, ClassNotFoundException {
-        FileInputStream fis = new FileInputStream(Constants.INCOME_CATEGORIES_DB);
+        FileInputStream fis = new FileInputStream(Constants.CATEGORIES_DB);
         ObjectInputStream ois = new ObjectInputStream(fis);
         setList((List<MoneyFlowCategory>) ois.readObject());
         ois.close();

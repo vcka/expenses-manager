@@ -3,7 +3,7 @@ package Service;
 import Util.DateUtil;
 import Menu.MenuUtil;
 import Menu.MenuView;
-import MoneyFlow.IRepository;
+import MoneyFlow.Repository;
 import MoneyFlow.MoneyFlow;
 import MoneyFlow.MoneyFlowCategory;
 
@@ -16,7 +16,7 @@ public class PEMServiceHelper {
     private Scanner in = new Scanner(System.in);
 
     @SuppressWarnings("unchecked")
-    public void onAddECategory(IRepository repository) throws IOException, InterruptedException {
+    public void onAddECategory(Repository repository) throws IOException, InterruptedException {
         MenuUtil.clearScreen();
         System.out.print("Please enter category name: ");
         String catName = in.nextLine();
@@ -30,7 +30,7 @@ public class PEMServiceHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public void onCategoryList(IRepository repository) throws IOException, InterruptedException {
+    public void onCategoryList(Repository repository) throws IOException, InterruptedException {
         MenuUtil.clearScreen();
         MenuView.printMenuHeader("Categories");
         List<MoneyFlowCategory> moneyFlowCategoryList = repository.getList();
@@ -41,7 +41,7 @@ public class PEMServiceHelper {
         MenuView.printMenuFooter();
     }
 
-    public void onFlowDelete(IRepository repository) throws IOException, InterruptedException {
+    public void onFlowDelete(Repository repository) throws IOException, InterruptedException {
         MenuUtil.clearScreen();
         onList(repository);
         System.out.print("Please enter number to remove: ");
@@ -60,14 +60,14 @@ public class PEMServiceHelper {
     }
 
     @SuppressWarnings("unchecked")
-    void onList(IRepository repository) throws IOException, InterruptedException {
+    void onList(Repository repository) throws IOException, InterruptedException {
         String catName;
         MenuUtil.clearScreen();
-        MenuView.printMenuHeader(repository.getClass().getName().equals("Income.IncomeIRepository$1") ? "Income list" : "Expenses list");
+        MenuView.printMenuHeader(repository.getClass().getName().equals("Income.IncomeRepository$1") ? "Income list" : "Expenses list");
         List<MoneyFlow> incomeList = repository.getList();
         for (int i = 0; i < incomeList.size(); i++) {
             MoneyFlow income = incomeList.get(i);
-            if (repository.getClass().getName().equals("Income.IncomeIRepository$1")) {
+            if (repository.getClass().getName().equals("Income.IncomeRepository$1")) {
                 catName = reportService.getIncomeCategoryNameByID(income.getCategoryId());
             } else {
                 catName = reportService.getExpenseCategoryNameByID(income.getCategoryId());
@@ -78,9 +78,9 @@ public class PEMServiceHelper {
         MenuView.printMenuFooter();
     }
 
-    void onCategoryDelete(IRepository repository) throws IOException, InterruptedException {
+    void onCategoryDelete(Repository repository) throws IOException, InterruptedException {
         MenuUtil.clearScreen();
-        if (repository.getClass().getName().equals("Income.IncomeCategoryIRepository$1")) {
+        if (repository.getClass().getName().equals("Income.IncomeCategoryRepository$1")) {
             PEMService.onIncomeCategoryList();
         } else {
             PEMService.onExpenseCategoryList();
@@ -91,7 +91,7 @@ public class PEMServiceHelper {
         if (nr == 0) return;
         if (nr <= repository.getList().size()) {
             System.out.println("Category " + ((MoneyFlowCategory)repository.getList().get(nr - 1)).getName() + " will be removed.");
-            if (repository.getClass().getName().equals("Income.IncomeCategoryIRepository$1")) {
+            if (repository.getClass().getName().equals("Income.IncomeCategoryRepository$1")) {
                 PEMService.incomeRepository.getList().removeIf(
                         moneyFlow -> moneyFlow.getCategoryId()
                                 .equals(((MoneyFlowCategory)repository.getList()
@@ -112,7 +112,7 @@ public class PEMServiceHelper {
     }
 
     @SuppressWarnings("unchecked")
-    private boolean checkForExistingCategory(String catName, IRepository repository) {
+    private boolean checkForExistingCategory(String catName, Repository repository) {
         return repository.getList().stream()
                 .anyMatch(moneyFlowCategory -> ((MoneyFlowCategory) moneyFlowCategory).getName().equals(catName));
     }

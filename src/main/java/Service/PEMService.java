@@ -1,10 +1,10 @@
 package Service;
 
+import Expense.ExpenseCategoryRepository;
+import Expense.ExpenseRepository;
+import Income.IncomeCategoryRepository;
 import Util.DateUtil;
-import Expense.ExpenseCategoryIRepository;
-import Expense.ExpenseIRepository;
-import Income.IncomeCategoryIRepository;
-import Income.IncomeIRepository;
+import Income.IncomeRepository;
 import Menu.MenuUtil;
 import Menu.MenuView;
 import MoneyFlow.MoneyFlow;
@@ -15,10 +15,10 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PEMService {
-    public static ExpenseIRepository expenseRepository = ExpenseIRepository.getRepository();
-    public static ExpenseCategoryIRepository expenseCategoryRepository = ExpenseCategoryIRepository.getRepository();
-    public static IncomeIRepository incomeRepository = IncomeIRepository.getRepository();
-    public static IncomeCategoryIRepository incomeCategoryRepository = IncomeCategoryIRepository.getRepository();
+    public static ExpenseRepository expenseRepository = ExpenseRepository.getRepository();
+    public static ExpenseCategoryRepository expenseCategoryRepository = ExpenseCategoryRepository.getRepository();
+    public static IncomeRepository incomeRepository = IncomeRepository.getRepository();
+    public static IncomeCategoryRepository incomeCategoryRepository = IncomeCategoryRepository.getRepository();
     public ReportService reportService = new ReportService();
     public static PEMServiceHelper serviceHelper = new PEMServiceHelper();
 

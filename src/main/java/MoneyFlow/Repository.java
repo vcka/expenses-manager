@@ -3,7 +3,7 @@ package MoneyFlow;
 import java.io.IOException;
 import java.util.List;
 
-public interface IRepository<T> {
+public interface Repository<T> {
     List<T> getList();
     void setList(List<T> list);
     void dataSave() throws IOException;

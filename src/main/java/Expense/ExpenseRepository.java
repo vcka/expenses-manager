@@ -1,27 +1,26 @@
-package Income;
+package Expense;
 
 import Util.Constants;
-import MoneyFlow.IRepository;
+import MoneyFlow.Repository;
 import MoneyFlow.MoneyFlow;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IncomeIRepository implements IRepository {
-
+public class ExpenseRepository implements Repository {
     private List<MoneyFlow> moneyFlowList = new ArrayList<>();
-    private static IncomeIRepository incomeRepository;
+    private static ExpenseRepository expenseRepository;
 
-    private IncomeIRepository() {
+    private ExpenseRepository() {
     }
 
-    public static IncomeIRepository getRepository() {
-        if (incomeRepository == null) {
-            incomeRepository = new IncomeIRepository() {
+    public static ExpenseRepository getRepository() {
+        if (expenseRepository == null) {
+            expenseRepository = new ExpenseRepository() {
             };
         }
-        return incomeRepository;
+        return expenseRepository;
     }
 
     @Override
@@ -37,7 +36,7 @@ public class IncomeIRepository implements IRepository {
 
     @Override
     public void dataSave() throws IOException {
-        FileOutputStream fos = new FileOutputStream(Constants.INCOME_DB);
+        FileOutputStream fos = new FileOutputStream(Constants.EXPENSES_DB);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(moneyFlowList);
         oos.close();
@@ -46,7 +45,7 @@ public class IncomeIRepository implements IRepository {
     @SuppressWarnings("unchecked")
     @Override
     public void dataLoad() throws IOException, ClassNotFoundException {
-        FileInputStream fis = new FileInputStream(Constants.INCOME_DB);
+        FileInputStream fis = new FileInputStream(Constants.EXPENSES_DB);
         ObjectInputStream ois = new ObjectInputStream(fis);
         setList((List<MoneyFlow>) ois.readObject());
         ois.close();

@@ -1,11 +1,15 @@
 import MoneyFlow.MoneyFlowCategory;
 import Service.PEMServiceHelper;
 import org.junit.jupiter.api.Test;
+
+import static java.lang.Integer.valueOf;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.function.Function;
+
 import Util.DateUtil;
 
 class DateUtilTest {
@@ -36,7 +40,7 @@ class DateUtilTest {
     }
 
     @Test
-    void calculateMonthlyTotalTest(){
+    void calculateMonthlyTotalTest() {
         MoneyFlowCategory cat = new MoneyFlowCategory("TestCategory");
 //        Repository repo = Repository.getRepository();
 //        repo.getCategoryList().add(cat);
